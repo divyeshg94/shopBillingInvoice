@@ -69,7 +69,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\InvoiceItems.cs" />
+    <Compile Include="Models\InvoiceModel.cs" />
+    <Compile Include="Models\ItemModel.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\EmployeeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

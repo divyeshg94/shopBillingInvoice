@@ -14,9 +14,10 @@ namespace invoiceGenerator.PersistenceSql
     {
         protected readonly IDbConnectionFactory connectionFactory;
 
-        public IDbConnection OpenConnection()
+        public static IDbConnection OpenConnection()
         {
-            var dbSettings = ConfigurationManager.ConnectionStrings["SQLConnectionString"].ToString();
+            //var dbSettings = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
+            var dbSettings = "Data Source=localhost;Initial Catalog=invoice; User Id=sa; password=pass@word1;";
             var connection = new SqlConnection(dbSettings);
             connection.Open();
 

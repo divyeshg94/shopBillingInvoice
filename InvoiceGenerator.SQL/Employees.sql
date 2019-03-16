@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Employees]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [EmployeeId] NVARCHAR(50) NULL, 
     [Name] NVARCHAR(50) NULL, 
     [PhoneNumber] NVARCHAR(50) NULL, 

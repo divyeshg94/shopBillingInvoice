@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Invoice]
 (
-	[Id] INT NOT NULL PRIMARY KEY, 
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [CustomerId] int NULL 
 	Foreign key (CustomerId) REFERENCES Customers(Id), 
     [EmployeeId] INT NOT NULL

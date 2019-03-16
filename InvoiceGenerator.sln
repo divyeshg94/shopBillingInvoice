@@ -9,6 +9,10 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "InvoiceGenerator.SQL", "Inv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "invoiceGenerator.PersistenceSql", "invoiceGenerator.PersistenceSql\invoiceGenerator.PersistenceSql.csproj", "{7A158245-D50B-4E97-9E34-754B11FCD2FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceAPI", "InvoiceAPI\InvoiceAPI.csproj", "{82A36D25-E65A-4944-B54E-27942A58D80B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceGeneratorTests", "InvoiceGeneratorTests\InvoiceGeneratorTests.csproj", "{801A43D5-77BA-40E3-80C8-B65CAE2AB243}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,14 @@ Global
 		{7A158245-D50B-4E97-9E34-754B11FCD2FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A158245-D50B-4E97-9E34-754B11FCD2FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A158245-D50B-4E97-9E34-754B11FCD2FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82A36D25-E65A-4944-B54E-27942A58D80B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A36D25-E65A-4944-B54E-27942A58D80B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A36D25-E65A-4944-B54E-27942A58D80B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A36D25-E65A-4944-B54E-27942A58D80B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{801A43D5-77BA-40E3-80C8-B65CAE2AB243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{801A43D5-77BA-40E3-80C8-B65CAE2AB243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{801A43D5-77BA-40E3-80C8-B65CAE2AB243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{801A43D5-77BA-40E3-80C8-B65CAE2AB243}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
