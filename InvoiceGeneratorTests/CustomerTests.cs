@@ -16,7 +16,7 @@ namespace InvoiceGeneratorTests
         }
 
         [TestMethod]
-        public async void AddCustomer()
+        public void AddCustomer()
         {
             var customer = new CustomerModel()
             {
@@ -24,7 +24,7 @@ namespace InvoiceGeneratorTests
                 PhoneNumber = "9566582129",
                 RegisteredOn = DateTime.UtcNow
             };
-            await Customer.AddCustomer(customer);
+            Customer.AddCustomer(customer);
         }
 
         [TestMethod]
@@ -35,6 +35,7 @@ namespace InvoiceGeneratorTests
                 Id = 1,
                 Name = "Divyesh",
                 PhoneNumber = "95665821288",
+                RegisteredOn = DateTime.UtcNow
             };
             Customer.UpdateCustomer(customer);
         }

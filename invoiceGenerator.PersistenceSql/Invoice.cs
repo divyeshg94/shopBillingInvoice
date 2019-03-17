@@ -9,67 +9,70 @@ namespace invoiceGenerator.PersistenceSql
 {
     public class Invoice: Repository
     {
-        //public static List<EmployeeModel> GetAllInvoices(DateTime from, DateTime to)
-        //{
-        //    try
-        //    {
-        //        var getAllEmployeesSql = @"SELECT Id, EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists FROM [Employees]";
-        //        using (var connection = OpenConnection())
-        //        {
-        //            var allEmployee = connection.Query<EmployeeModel>(getAllEmployeesSql).ToList();
-        //            return allEmployee;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
+        public static List<InvoiceModel> GetAllInvoices(DateTime from, DateTime to)
+        {
+            try
+            {
+                var getInvoicesSql = @"SELECT * FROM [Invoice] i WHERE i.[SaleDate] >= @from AND i.[SaleDate] <= @to";
+                var getInvoiceItemsSql = @"SELECT * FROM [InvoiceItems] WHERE InvoiceId = @InvoiceId";
 
-        //public static EmployeeModel GetEmployee(string name, string phoneNumber)
-        //{
-        //    var getEmployeeSql = @"SELECT EmployeeId FROM [EMPLOYEES] WHERE Name = @name";
-        //    if (!string.IsNullOrEmpty(phoneNumber))
-        //    {
-        //        getEmployeeSql += @" and PhoneNumber = @phoneNumber";
-        //    }
+                using (var connection = OpenConnection())
+                {
+                    var allInvoice = connection.Query<InvoiceModel>(getInvoicesSql, new { @from = from, @to = to}).ToList();
+                    foreach (var invoice in allInvoice)
+                    {
+                        var invoiceItems =
+                            connection.Query<InvoiceItems>(getInvoiceItemsSql, new {@InvoiceId = invoice.Id}).ToList();
+                        invoice.InvoiceItemses = invoiceItems;
 
-        //    using (var connection = OpenConnection())
-        //    {
-        //        var employee = connection.QueryFirstOrDefault<EmployeeModel>(getEmployeeSql, new
-        //        {
-        //            @name = name,
-        //            @phoneNumber = phoneNumber
-        //        });
-        //        return employee;
-        //    }
+                        var customer = Customer.GetCustomer(invoice.CustomerId);
+                        invoice.Customer = customer;
 
-        //}
+                        var employee = Employee.GetEmployee(invoice.EmployeeId);
+                        invoice.Employee = employee;
 
-        //public static async Task<int> AddEmployee(EmployeeModel employee)
-        //{
-        //    try
-        //    {
-        //        var addEmployeeSql =
-        //            @"INSERT INTO [EMPLOYEES] (EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists)
-        //                                VALUES (@EmployeeId, @Name, @PhoneNumber, @JoinedOn, @ReleavedOn, @IsExists)";
-                                    
-        //        using (var connection = OpenConnection())
-        //        {
-        //            var alreadyExists = GetEmployee(employee.Name, employee.PhoneNumber);
-        //            if (alreadyExists != null)
-        //            {
-        //                return alreadyExists.Id;
-        //            }
-        //            var id = connection.Execute(addEmployeeSql, employee);
-        //            return id;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw ex;
-        //    }
-        //}
+                        foreach (var item in invoiceItems)
+                        {
+                            var i = Item.GetItem(item.ItemId);
+                            item.Item = i;
+                        }
+                    }
+                    return allInvoice;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static async Task<int> AddInvoice(InvoiceModel invoice)
+        {
+            try
+            {
+                var addInvoiceSql =
+                    @"INSERT INTO [Invoice] (EmployeeId, CustomerId, TotalAmount, SaleDate)
+                                        VALUES (@EmployeeId, @CustomerId, @TotalAmount, @SaleDate);
+                                        SELECT CAST(SCOPE_IDENTITY() as int)";
+                var addInvoiceItemsSql = @"INSERT INTO [InvoiceItems] (InvoiceId, ItemId, Cost)
+                                        VALUES (@InvoiceId, @ItemId, @Cost)";
+
+                using (var connection = OpenConnection())
+                {
+                    var invoiceId = connection.Query<int>(addInvoiceSql, invoice).Single();
+                    foreach (var invoiceItem in invoice.InvoiceItemses)
+                    {
+                        invoiceItem.InvoiceId = invoiceId;
+                        connection.Execute(addInvoiceItemsSql, invoiceItem);
+                    }
+                    return invoiceId;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
         //public static void UpdateEmployee(EmployeeModel employee)
         //{

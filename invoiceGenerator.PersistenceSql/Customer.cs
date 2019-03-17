@@ -26,6 +26,16 @@ namespace invoiceGenerator.PersistenceSql
             }
         }
 
+        public static CustomerModel GetCustomer(int customerId)
+        {
+            var getCustomerSql = @"SELECT Id, Name, PhonenUmber, RegisteredOn FROM [Customers] WHERE Id = @customerId";
+            using (var connection = OpenConnection())
+            {
+                var customer = connection.QueryFirstOrDefault<CustomerModel>(getCustomerSql, new {@customerId = customerId});
+                return customer;
+            }
+        }
+
         public static CustomerModel GetCustomer(string name, string phoneNumber)
         {
             var getCustomerSql = @"SELECT Id, Name, PhoneNumber, RegisteredOn FROM [Customers] WHERE ";
@@ -57,7 +67,8 @@ namespace invoiceGenerator.PersistenceSql
             {
                 var addCustomerSql =
                     @"INSERT INTO [Customers] (Name, PhoneNumber, RegisteredOn)
-                                        VALUES (@Name, @PhoneNumber, @RegisteredOn)";
+                                        VALUES (@Name, @PhoneNumber, @RegisteredOn);
+                                        SELECT CAST(SCOPE_IDENTITY() as int)";
                                     
                 using (var connection = OpenConnection())
                 {
@@ -66,7 +77,7 @@ namespace invoiceGenerator.PersistenceSql
                     {
                         return alreadyExists.Id;
                     }
-                    var id = connection.Execute(addCustomerSql, customer);
+                    var id = connection.Query<int>(addCustomerSql, customer).Single();
                     return id;
                 }
             }

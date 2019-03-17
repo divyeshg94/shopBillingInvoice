@@ -26,6 +26,16 @@ namespace invoiceGenerator.PersistenceSql
             }
         }
 
+        public static EmployeeModel GetEmployee(int employeeId)
+        {
+            var getEmployeeSql = @"SELECT  Id, EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists FROM [EMPLOYEES] WHERE Id = @Id";
+            using (var connection = OpenConnection())
+            {
+                var employee = connection.QueryFirstOrDefault<EmployeeModel>(getEmployeeSql, new {@Id = employeeId });
+                return employee;
+            }
+        }
+
         public static EmployeeModel GetEmployee(string name, string phoneNumber)
         {
             var getEmployeeSql = @"SELECT EmployeeId FROM [EMPLOYEES] WHERE Name = @name";
@@ -43,7 +53,6 @@ namespace invoiceGenerator.PersistenceSql
                 });
                 return employee;
             }
-
         }
 
         public static async Task<int> AddEmployee(EmployeeModel employee)
@@ -52,7 +61,8 @@ namespace invoiceGenerator.PersistenceSql
             {
                 var addEmployeeSql =
                     @"INSERT INTO [EMPLOYEES] (EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists)
-                                        VALUES (@EmployeeId, @Name, @PhoneNumber, @JoinedOn, @ReleavedOn, @IsExists)";
+                                        VALUES (@EmployeeId, @Name, @PhoneNumber, @JoinedOn, @ReleavedOn, @IsExists);
+                                        SELECT CAST(SCOPE_IDENTITY() as int)";
                                     
                 using (var connection = OpenConnection())
                 {
@@ -61,7 +71,7 @@ namespace invoiceGenerator.PersistenceSql
                     {
                         return alreadyExists.Id;
                     }
-                    var id = connection.Execute(addEmployeeSql, employee);
+                    var id = connection.Query<int>(addEmployeeSql, employee).Single();
                     return id;
                 }
             }

@@ -16,7 +16,7 @@ namespace InvoiceGeneratorTests
         }
 
         [TestMethod]
-        public async void AddItem()
+        public void AddItem()
         {
             var item = new ItemsModel()
             {
@@ -25,7 +25,7 @@ namespace InvoiceGeneratorTests
                 IsAvailable = true,
                 Price = 10
             };
-            await Item.AddItem(item);
+            Item.AddItem(item);
         }
 
         [TestMethod]

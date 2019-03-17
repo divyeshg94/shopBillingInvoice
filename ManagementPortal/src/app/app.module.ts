@@ -1,14 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { CustomerComponent } from './customer/customer.component';
+import { AngMaterialModule } from './mat.module';
+import { HttpClientModule } from '@angular/common/http'; 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    InvoiceComponent,
+    EmployeeComponent,
+    CustomerComponent
   ],
   imports: [
-    BrowserModule
+    RouterModule,
+    BrowserModule,
+    AppRoutingModule,
+    AngMaterialModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

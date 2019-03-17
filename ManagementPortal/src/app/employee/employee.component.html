@@ -1,0 +1,35 @@
+<mat-table #table [dataSource]="dataSource">
+  <!-- Position Column -->
+  <ng-container matColumnDef="Id">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> No. </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.Id}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> Name </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.Name}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="PhoneNumber">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> PhoneNumber </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.PhoneNumber}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="JoinedOn">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> JoinedOn </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.JoinedOn}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="ReleavedOn">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> ReleavedOn </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.ReleavedOn}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="IsExists">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> IsExists </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.IsExists}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</mat-table>

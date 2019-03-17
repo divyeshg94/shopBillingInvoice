@@ -26,6 +26,23 @@ namespace invoiceGenerator.PersistenceSql
             }
         }
 
+        public static ItemsModel GetItem(int itemId)
+        {
+            try
+            {
+                var getItemSql = @"SELECT Id, Name, Category, Price, IsAvailable FROM [Items] WHERE Id = @Id";
+                using (var connection = OpenConnection())
+                {
+                    var item = connection.QueryFirstOrDefault<ItemsModel>(getItemSql, new {@Id = itemId});
+                    return item;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static ItemsModel GetItem(string name, string category)
         {
             var getItemsSql = @"SELECT Id, Name, Category, Price, IsAvailable FROM [Items] WHERE ";
