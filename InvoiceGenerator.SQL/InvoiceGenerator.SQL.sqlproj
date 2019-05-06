@@ -64,6 +64,7 @@
     <Build Include="Items.sql" />
     <Build Include="Invoice.sql" />
     <Build Include="InvoiceItems.sql" />
+    <Build Include="Stock.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="InvoiceGenerator.SQL.refactorlog" />

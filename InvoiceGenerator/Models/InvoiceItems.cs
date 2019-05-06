@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace InvoiceGenerator.Models
+﻿namespace InvoiceGenerator.Models
 {
     public class InvoiceItems
     {
@@ -17,5 +11,7 @@ namespace InvoiceGenerator.Models
         public ItemsModel Item { get; set; }
 
         public int Cost { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

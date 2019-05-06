@@ -8,6 +8,7 @@ import { EmployeeComponent } from './employee/employee.component';
 import { CustomerComponent } from './customer/customer.component';
 import { AngMaterialModule } from './mat.module';
 import { HttpClientModule } from '@angular/common/http'; 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     AngMaterialModule,
     HttpClientModule
   ],

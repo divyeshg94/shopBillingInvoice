@@ -1,7 +1,39 @@
-<h1>Angular Router</h1>
-<nav>
-  <a routerLink="/invoice" routerLinkActive="active">Invoice</a>
-  <a routerLink="/employee" routerLinkActive="active">Employee</a>
-  <a routerLink="/customer" routerLinkActive="active">Customer</a>
-</nav>
-<router-outlet></router-outlet>
+<div class="ngContainer" *ngIf="!isLoading">
+  <mat-toolbar [ngClass]="toolBar">
+      <span class="whiteColor">Management Portal</span>
+  </mat-toolbar>
+
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sideNav position="start" mode="push" opened="true" disableClose="true" [ngClass]="menu-dark"
+                 class="mat-elevation-z1">
+      <mat-nav-list class="sideNavBar">
+        <mat-accordion>
+          <a mat-list-item *ngFor="let item of menuItems" routerLink="{{item.MenuItemText}}" [routerLinkActive]="['active']">
+            <mat-icon>{{item.MenuItemIcon}}</mat-icon>&nbsp; <span>{{item.MenuItemText}}</span>
+          </a>
+          <a mat-list-item routerLink="invoice" [routerLinkActive]="['active']">
+            <mat-icon></mat-icon>&nbsp; <span i18n>Invoice</span>
+          </a>
+          <a mat-list-item routerLink="employee" [routerLinkActive]="['active']">
+            <mat-icon></mat-icon>&nbsp; <span i18n>Employee</span>
+          </a>
+          <a mat-list-item routerLink="customer" [routerLinkActive]="['active']">
+            <mat-icon></mat-icon>&nbsp; <span i18n>Customer</span>
+          </a>
+        </mat-accordion>
+      </mat-nav-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content #sidenavContent class="sidenav-content">
+      <!-- <breadcrumb [allowBootstrap]="true" class="breadCrumb"></breadcrumb> -->
+      <router-outlet></router-outlet>
+      <!-- <app-footer></app-footer> -->
+  </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
+
+<div *ngIf="isLoading">
+  <div class="loading-indicator">
+      <mat-progress-spinner mode="indeterminate" [color]="color" strokeWidth="3" [diameter]="100"></mat-progress-spinner>
+  </div>
+</div>

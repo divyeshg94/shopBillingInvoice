@@ -6,6 +6,14 @@ mat-table {
     padding-top:15px;
   }
 
+  .mat-toolbar{
+    background: black;
+  }
+
+  .mat-drawer-backdrop{
+    z-index: 0 !important;
+  }
+
 .mat-sort-header-button{
     color: black !important; 
     font-weight: bold !important;

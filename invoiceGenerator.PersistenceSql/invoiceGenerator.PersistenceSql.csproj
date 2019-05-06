@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Invoice.cs" />
+    <Compile Include="Stock.cs" />
     <Compile Include="Items.cs" />
     <Compile Include="DatabaseSettings.cs" />
     <Compile Include="Customer.cs" />

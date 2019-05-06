@@ -5,5 +5,6 @@
 	Foreign key (InvoiceId) REFERENCES Invoice(Id), 
     [ItemId] INT NULL
 	Foreign key (ItemId) REFERENCES Items(Id), 
-	[Cost] NVARCHAR(50) NULL
+	[Cost] NVARCHAR(50) NULL, 
+    [Quantity] INT NOT NULL
 )

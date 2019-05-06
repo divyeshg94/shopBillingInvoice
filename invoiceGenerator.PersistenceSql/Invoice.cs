@@ -54,8 +54,8 @@ namespace invoiceGenerator.PersistenceSql
                     @"INSERT INTO [Invoice] (EmployeeId, CustomerId, TotalAmount, SaleDate)
                                         VALUES (@EmployeeId, @CustomerId, @TotalAmount, @SaleDate);
                                         SELECT CAST(SCOPE_IDENTITY() as int)";
-                var addInvoiceItemsSql = @"INSERT INTO [InvoiceItems] (InvoiceId, ItemId, Cost)
-                                        VALUES (@InvoiceId, @ItemId, @Cost)";
+                var addInvoiceItemsSql = @"INSERT INTO [InvoiceItems] (InvoiceId, ItemId, Cost, Quantity)
+                                        VALUES (@InvoiceId, @ItemId, @Cost, @Quantity)";
 
                 using (var connection = OpenConnection())
                 {

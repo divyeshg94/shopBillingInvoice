@@ -3,6 +3,8 @@
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
     [Name] NVARCHAR(50) NULL, 
     [Category] NVARCHAR(50) NULL, 
+    [Size] NVARCHAR(50) NULL,
     [Price] NVARCHAR(50) NULL, 
-    [IsAvailable] BIT NOT NULL DEFAULT 1
+    [IsAvailable] BIT NOT NULL DEFAULT 1, 
+    [IsProduced] BIT NOT NULL DEFAULT 1 
 )

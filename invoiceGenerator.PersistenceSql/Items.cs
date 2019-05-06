@@ -13,7 +13,7 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getAllItemsSql = @"SELECT Id, Name, Category, Price, IsAvailable FROM [Items]";
+                var getAllItemsSql = @"SELECT Id, Name, Category, Price, Size, IsAvailable, IsProduced FROM [Items]";
                 using (var connection = OpenConnection())
                 {
                     var allCustomers = connection.Query<ItemsModel>(getAllItemsSql).ToList();
@@ -30,7 +30,7 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getItemSql = @"SELECT Id, Name, Category, Price, IsAvailable FROM [Items] WHERE Id = @Id";
+                var getItemSql = @"SELECT Id, Name, Category, Price, Size, IsAvailable, IsProduced FROM [Items] WHERE Id = @Id";
                 using (var connection = OpenConnection())
                 {
                     var item = connection.QueryFirstOrDefault<ItemsModel>(getItemSql, new {@Id = itemId});
@@ -45,7 +45,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static ItemsModel GetItem(string name, string category)
         {
-            var getItemsSql = @"SELECT Id, Name, Category, Price, IsAvailable FROM [Items] WHERE ";
+            var getItemsSql = @"SELECT Id, Name, Category, Price, Size, IsProduced, IsAvailable FROM [Items] WHERE ";
             if (!string.IsNullOrEmpty(category))
             {
                 getItemsSql += string.IsNullOrEmpty(name) ? "" : " Name = @name and ";
@@ -73,8 +73,8 @@ namespace invoiceGenerator.PersistenceSql
             try
             {
                 var addItemSql =
-                    @"INSERT INTO [Items] (Name, Category, Price, IsAvailable )
-                                        VALUES (@Name, @Category, @Price, @IsAvailable )";
+                    @"INSERT INTO [Items] (Name, Category, Price, Size, IsProduced, IsAvailable )
+                                        VALUES (@Name, @Category, @Price, @Size, @IsProduced, @IsAvailable )";
                                     
                 using (var connection = OpenConnection())
                 {
@@ -95,7 +95,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static void UpdateItem(ItemsModel item)
         {
-            var updateItemSql = @"Update [Items] SET Name = @Name, Category = @Category, Price = @Price, IsAvailable = @IsAvailable
+            var updateItemSql = @"Update [Items] SET Name = @Name, Category = @Category, Price = @Price, Size = @Size, IsProduced = @IsProduced, IsAvailable = @IsAvailable
                                         WHERE Id = @Id";
             try
             {
@@ -112,7 +112,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static void DeleteItem(int id)
         {
-            var updateItemSql = @"Update [Items] SET IsAvailable = 'false'
+            var updateItemSql = @"Update [Items] SET IsProduced = 'false'
                                         WHERE Id = @Id";
             try
             {
