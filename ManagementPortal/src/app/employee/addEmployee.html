@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>Create Customer</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.Name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Phone Number</mat-label>
+    <input matInput [(ngModel)]="data.PhoneNumber">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Joined On</mat-label>
+    <input matInput [matDatepicker]="picker" [(ngModel)]="data.JoinedOn">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <div *ngIf="data.isEditMode">
+    <mat-checkbox [(ngModel)]="data.IsExists">IsExists</mat-checkbox>
+
+    <br/>
+    <mat-form-field appearance="fill" *ngIf="!data.IsExists">
+      <mat-label>Releaved On</mat-label>
+      <input matInput [matDatepicker]="picker" [(ngModel)]="data.ReleavedOn">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </div>
+</div>
+  
+
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>

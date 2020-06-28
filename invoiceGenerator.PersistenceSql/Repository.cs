@@ -17,7 +17,7 @@ namespace invoiceGenerator.PersistenceSql
         public static IDbConnection OpenConnection()
         {
             //var dbSettings = ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString();
-            var dbSettings = "Data Source=localhost;Initial Catalog=invoice; User Id=sa; password=pass@word1;";
+            var dbSettings = "Data Source=Divyesh\\Divyesh;Initial Catalog=invoice; User Id=sa; password=pass@word1;";
             var connection = new SqlConnection(dbSettings);
             connection.Open();
 

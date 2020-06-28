@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
@@ -29,9 +30,9 @@ namespace InvoiceAPI.Controllers
         }
 
         [HttpPost]
-        public void AddEmployee(EmployeeModel employee)
+        public async Task AddEmployee(EmployeeModel employee)
         {
-            Employee.AddEmployee(employee);
+            await Employee.AddEmployee(employee);
         }
 
         [HttpPut]

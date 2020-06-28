@@ -6,4 +6,7 @@ export class Employee{
     JoinedOn: Date;
     ReleavedOn: Date;
     IsExists: boolean;
+    
+    //FOR UI
+    isEditMode: boolean;
 }

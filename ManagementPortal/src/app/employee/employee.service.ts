@@ -31,12 +31,25 @@ export class EmployeeService {
     return await this.http.get<Employee[]>(url, httpOptions).toPromise();
   }
 
+  async addEmployee(employee : Employee) {
+    var httpOptions = this.getHttpOptions();
+    var url = baseUrl + this.controller + "/AddEmployee";
+    return await this.http.post(url, employee, httpOptions).toPromise();
+  }
+
+  async updateEmployee(employee : Employee) {
+    var httpOptions = this.getHttpOptions();
+    var url = baseUrl + this.controller + "/updateEmployee";
+    return await this.http.put(url, employee, httpOptions).toPromise();
+  }
+
   getHttpOptions() {
     httpOptions.headers = httpOptions.headers.set('Access-Control-Allow-Origin', '*');
     httpOptions.headers = httpOptions.headers.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
-    // httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
-    httpOptions.headers = httpOptions.headers.set('Content-Type', '*');
+    httpOptions.headers = httpOptions.headers.set('Content-Type', 'application/json');
+    //httpOptions.headers = httpOptions.headers.set('Content-Type', '*');
     httpOptions.headers = httpOptions.headers.set('Allow', 'GET, POST, PUT, DELETE');
+    httpOptions.headers = httpOptions.headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS,DELETE,PUT');
     return httpOptions;
   }
 }
