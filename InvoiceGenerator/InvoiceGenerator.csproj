@@ -69,6 +69,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\InvoiceItems.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\InvoiceModel.cs" />

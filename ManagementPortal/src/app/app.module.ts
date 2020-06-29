@@ -11,6 +11,7 @@ import { AngMaterialModule } from './mat.module';
 import { HttpClientModule } from '@angular/common/http'; 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AddCustomerDialog } from './customer/AddCustomerDialog';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     InvoiceComponent,
     EmployeeComponent,
     CustomerComponent,
-    AddEmployeeDialog
+    AddEmployeeDialog,
+    AddCustomerDialog
   ],
   imports: [
     RouterModule,
@@ -30,7 +32,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     FormsModule
   ],
-  entryComponents:[AddEmployeeDialog],
+  entryComponents:[AddEmployeeDialog, AddCustomerDialog],
   providers: [],
   bootstrap: [AppComponent]
 })

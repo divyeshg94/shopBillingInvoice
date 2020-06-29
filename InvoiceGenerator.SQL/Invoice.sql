@@ -6,5 +6,9 @@
     [EmployeeId] INT NOT NULL
 	Foreign key ([EmployeeId]) REFERENCES Employees(Id), 
     [TotalAmount] NVARCHAR(50) NOT NULL, 
-	[SaleDate] Date NOT NULL
+	[SaleDate] Date NOT NULL, 
+    [DiscountPercent] INT NULL, 
+    [DiscountAmount] NVARCHAR(50) NULL, 
+    [Tax] NVARCHAR(50) NULL, 
+    [Notes] VARCHAR(MAX) NULL
 )

@@ -3,4 +3,5 @@ export class Customer{
     Name: string;
     PhoneNumber: string;
     RegisteredOn: Date;
+    isEditMode: boolean;
 }

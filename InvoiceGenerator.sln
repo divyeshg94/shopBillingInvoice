@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.168
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceGenerator", "InvoiceGenerator\InvoiceGenerator.csproj", "{D8742A1A-4B44-47B1-924C-ECED2CADCB02}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceAPI", "InvoiceAPI\InvoiceAPI.csproj", "{82A36D25-E65A-4944-B54E-27942A58D80B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceGeneratorTests", "InvoiceGeneratorTests\InvoiceGeneratorTests.csproj", "{801A43D5-77BA-40E3-80C8-B65CAE2AB243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceGenerator.Service", "InvoiceGenerator.Service\InvoiceGenerator.Service.csproj", "{8C2BA2C3-A500-42B6-9DD7-9BAB26C53FE7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{801A43D5-77BA-40E3-80C8-B65CAE2AB243}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{801A43D5-77BA-40E3-80C8-B65CAE2AB243}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{801A43D5-77BA-40E3-80C8-B65CAE2AB243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C2BA2C3-A500-42B6-9DD7-9BAB26C53FE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C2BA2C3-A500-42B6-9DD7-9BAB26C53FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C2BA2C3-A500-42B6-9DD7-9BAB26C53FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C2BA2C3-A500-42B6-9DD7-9BAB26C53FE7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,10 +1,11 @@
 ﻿CREATE TABLE [dbo].[InvoiceItems]
 (
 	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
-    [InvoiceId] INT NULL, 
+    [InvoiceId] INT NOT NULL, 
 	Foreign key (InvoiceId) REFERENCES Invoice(Id), 
     [ItemId] INT NULL
 	Foreign key (ItemId) REFERENCES Items(Id), 
-	[Cost] NVARCHAR(50) NULL, 
-    [Quantity] INT NOT NULL
+    [Quantity] INT NOT NULL, 
+    [UnitPrice] NVARCHAR(50) NOT NULL,
+	[TotalPrice] NVARCHAR(50) NOT NULL
 )
