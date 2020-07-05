@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
 
 namespace InvoiceGenerator.Service.EmailService
@@ -20,9 +21,11 @@ namespace InvoiceGenerator.Service.EmailService
             invoiceHtml.Append("<b>Email : </b>").Append(invoiceToGenerate.Customer.EmailId).Append("<br />");
             invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Qty</th><th>Product</th></tr>");
             // InvoiceItem should be a collection property which contains list of invoice lines
+            var serialNum = 1;
             foreach (var invoiceLine in invoiceToGenerate.InvoiceItemses)
             {
-                invoiceHtml.Append("<tr><td>").Append(invoiceLine.Quantity.ToString()).Append("</td><td>").Append(invoiceLine.Item.Name).Append("</td></tr>");
+                var item = Item.GetItem(invoiceLine.ItemId);
+                invoiceHtml.Append("<tr><td>").Append(invoiceLine.Quantity.ToString()).Append("</td><td>").Append(item.Name).Append("</td></tr>");
             }
             invoiceHtml.Append("</table>");
             return invoiceHtml.ToString();
@@ -30,16 +33,37 @@ namespace InvoiceGenerator.Service.EmailService
 
         public void SendInvoiceMail(InvoiceModel invoiceToGenerate)
         {
+            invoiceToGenerate.Customer = Customer.GetCustomer(invoiceToGenerate.CustomerId);
+            invoiceToGenerate.Employee = Employee.GetEmployee(invoiceToGenerate.EmployeeId);
+
             var mailBody = GenerateInvoice(invoiceToGenerate);
 
-            using (MailMessage mailMessage = new MailMessage(fromEmail, toEmail, subject, mailBody))
+            var emailSettingGroup = Settings.GetSettingByGroup(Constants.EmailSettings);
+            var fromEmail = emailSettingGroup.FirstOrDefault(s => s.Key == Constants.FromEmailSettings).Value;
+            var fromUserName = emailSettingGroup.FirstOrDefault(s => s.Key == Constants.FromUserNameSettings).Value;
+            var fromPassword = emailSettingGroup.FirstOrDefault(s => s.Key == Constants.FromPasswordSettings).Value;
+
+            var invoiceSettings = Settings.GetSettingByGroup(Constants.InvoiceSettings);
+            var subject = invoiceSettings.FirstOrDefault(s => s.Key == Constants.InvoiceSubjectSettings).Value;
+
+            using (MailMessage mailMessage = new MailMessage(fromEmail, invoiceToGenerate.Customer.EmailId, subject, mailBody))
             {
-                mailMessage.IsBodyHtml = true;
-                using (SmtpClient smtpClient = new SmtpClient())
+                try
                 {
-                    smtpClient.Host = "127.0.0.1";
-                    smtp.Credentials = new System.Net.NetworkCredential("username", "password");
-                    smtpClient.Send(mailMessage);
+                    mailMessage.IsBodyHtml = true;
+                    using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtpClient.Host = "smtp.gmail.com";
+                        smtpClient.EnableSsl = true;
+                        smtpClient.Port = 587;
+                        smtpClient.UseDefaultCredentials = false;
+                        smtpClient.Credentials = new System.Net.NetworkCredential(fromUserName, fromPassword);
+                        smtpClient.Send(mailMessage);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //Log error
                 }
             }
         }

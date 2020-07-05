@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
+using InvoiceGenerator.Service.EmailService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InvoiceGeneratorTests
@@ -31,30 +32,22 @@ namespace InvoiceGeneratorTests
             var item = new InvoiceItems()
             {
                 ItemId = 1,
-                Cost = 10,
+                UnitPrice = 10,
+                Quantity = 2
             };
             invoiceItems.Add(item);
             invoice.InvoiceItemses = invoiceItems;
-            var totalCost = 0;
+            var totalCost = 0d;
             foreach (var i in invoiceItems)
             {
-                totalCost += i.Cost;
+                totalCost += i.TotalPrice;
             }
 
             invoice.TotalAmount = totalCost.ToString();
             Invoice.AddInvoice(invoice);
-        }
 
-        //[TestMethod]
-        //public void UpdateCustomer()
-        //{
-        //    var customer = new CustomerModel()
-        //    {
-        //        Id = 1,
-        //        Name = "Divyesh",
-        //        PhoneNumber = "95665821288",
-        //    };
-        //    Customer.UpdateCustomer(customer);
-        //}
+            var  emailHelper = new EmailHelper();
+            emailHelper.SendInvoiceMail(invoice);
+        }
     }
 }

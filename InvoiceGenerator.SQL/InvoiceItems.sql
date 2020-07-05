@@ -7,5 +7,5 @@
 	Foreign key (ItemId) REFERENCES Items(Id), 
     [Quantity] INT NOT NULL, 
     [UnitPrice] NVARCHAR(50) NOT NULL,
-	[TotalPrice] NVARCHAR(50) NOT NULL
+	[TotalPrice] NVARCHAR(50) NOT NULL 
 )

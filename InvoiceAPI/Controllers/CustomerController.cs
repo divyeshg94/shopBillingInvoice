@@ -6,22 +6,26 @@ using InvoiceGenerator.Models;
 
 namespace InvoiceAPI.Controllers
 {
+    [RoutePrefix("customer")]
     public class CustomerController : ApiController
     {
         // GET: customer
         [HttpGet]
+        [Route("")]
         public List<CustomerModel> GetAll()
         {
             return Customer.GetAllCustomers();
         }
 
         [HttpGet]
-        public CustomerModel Get(string name, string phoneNumber)
+        [Route("name")]
+        public CustomerModel Get(string name = "", string phoneNumber = "")
         {
             return Customer.GetCustomer(name, phoneNumber);
         }
 
         [HttpGet]
+        [Route("id")]
         public CustomerModel GetCustomer(int customerId)
         {
             return Customer.GetCustomer(customerId);

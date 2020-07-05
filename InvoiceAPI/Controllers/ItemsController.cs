@@ -6,37 +6,34 @@ using InvoiceGenerator.Models;
 
 namespace InvoiceAPI.Controllers
 {
-    public class CustomerController : ApiController
+    [RoutePrefix("items")]
+    public class ItemsController : ApiController
     {
         // GET: customer
         [HttpGet]
-        public List<CustomerModel> GetAll()
+        [Route("")]
+        public List<ItemsModel> GetAll()
         {
-            return Customer.GetAllCustomers();
+            return Item.GetAllItems();
         }
 
         [HttpGet]
-        public CustomerModel Get(string name, string phoneNumber)
+        [Route("name")]
+        public ItemsModel Get(string name = "", string category = "")
         {
-            return Customer.GetCustomer(name, phoneNumber);
-        }
-
-        [HttpGet]
-        public CustomerModel GetCustomer(int customerId)
-        {
-            return Customer.GetCustomer(customerId);
+            return Item.GetItem(name, category);
         }
 
         [HttpPost]
-        public async Task Add(CustomerModel customer)
+        public async Task Add(ItemsModel item)
         {
-            await Customer.AddCustomer(customer);
+            await Item.AddItem(item);
         }
 
         [HttpPut]
-        public void Update(CustomerModel customer)
+        public void Update(ItemsModel item)
         {
-            Customer.UpdateCustomer(customer);
+            Item.UpdateItem(item);
         }
     }
 }

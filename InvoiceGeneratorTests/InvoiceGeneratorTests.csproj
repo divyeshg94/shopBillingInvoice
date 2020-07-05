@@ -57,6 +57,10 @@
       <Project>{7A158245-D50B-4E97-9E34-754B11FCD2FB}</Project>
       <Name>invoiceGenerator.PersistenceSql</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InvoiceGenerator.Service\InvoiceGenerator.Service.csproj">
+      <Project>{8c2ba2c3-a500-42b6-9dd7-9bab26c53fe7}</Project>
+      <Name>InvoiceGenerator.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InvoiceGenerator\InvoiceGenerator.csproj">
       <Project>{D8742A1A-4B44-47B1-924C-ECED2CADCB02}</Project>
       <Name>InvoiceGenerator</Name>

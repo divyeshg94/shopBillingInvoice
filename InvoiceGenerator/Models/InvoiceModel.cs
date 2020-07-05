@@ -17,6 +17,11 @@ namespace InvoiceGenerator.Models
 
         public DateTime SaleDate { get; set; }
 
+        public double DiscountPercentage { get; set; }
+        public double DiscountAmount { get; set; }
+        public double TaxPercentage { get; set; }
+        public string Notes { get; set; }
+
         public ICollection<InvoiceItems> InvoiceItemses { get; set; }
     }
 }

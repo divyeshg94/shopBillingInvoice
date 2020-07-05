@@ -13,7 +13,7 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getAllCustomersSql = @"SELECT Id, Name, PhoneNumber, RegisteredOn FROM [Customers]";
+                var getAllCustomersSql = @"SELECT Id, Name, PhoneNumber, EmailId, RegisteredOn FROM [Customers]";
                 using (var connection = OpenConnection())
                 {
                     var allCustomers = connection.Query<CustomerModel>(getAllCustomersSql).ToList();
@@ -28,7 +28,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static CustomerModel GetCustomer(int customerId)
         {
-            var getCustomerSql = @"SELECT Id, Name, PhonenUmber, RegisteredOn FROM [Customers] WHERE Id = @customerId";
+            var getCustomerSql = @"SELECT Id, Name, PhonenUmber, EmailId, RegisteredOn FROM [Customers] WHERE Id = @customerId";
             using (var connection = OpenConnection())
             {
                 var customer = connection.QueryFirstOrDefault<CustomerModel>(getCustomerSql, new {@customerId = customerId});
@@ -38,7 +38,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static CustomerModel GetCustomer(string name, string phoneNumber)
         {
-            var getCustomerSql = @"SELECT Id, Name, PhoneNumber, RegisteredOn FROM [Customers] WHERE ";
+            var getCustomerSql = @"SELECT Id, Name, PhoneNumber, EmailId, RegisteredOn FROM [Customers] WHERE ";
             if (!string.IsNullOrEmpty(phoneNumber))
             {
                 getCustomerSql += string.IsNullOrEmpty(name) ? "" : " Name = @name and ";
@@ -66,8 +66,8 @@ namespace invoiceGenerator.PersistenceSql
             try
             {
                 var addCustomerSql =
-                    @"INSERT INTO [Customers] (Name, PhoneNumber, RegisteredOn)
-                                        VALUES (@Name, @PhoneNumber, @RegisteredOn);
+                    @"INSERT INTO [Customers] (Name, PhoneNumber, EmailId, RegisteredOn)
+                                        VALUES (@Name, @PhoneNumber, @EmailId, @RegisteredOn);
                                         SELECT CAST(SCOPE_IDENTITY() as int)";
                                     
                 using (var connection = OpenConnection())
@@ -89,7 +89,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static void UpdateCustomer(CustomerModel customer)
         {
-            var updateCustomerSql = @"Update [Customers] SET Name = @Name, PhoneNumber = @PhoneNumber, RegisteredOn = @RegisteredOn
+            var updateCustomerSql = @"Update [Customers] SET Name = @Name, PhoneNumber = @PhoneNumber, EmailId = @EmailId, RegisteredOn = @RegisteredOn
                                         WHERE Id = @Id";
             try
             {

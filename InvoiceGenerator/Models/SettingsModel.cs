@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
 
 namespace InvoiceGenerator.Models
 {
@@ -15,5 +17,11 @@ namespace InvoiceGenerator.Models
         public DateTime CreatedOn { get; set; }
 
         public DateTime UpdatedOn { get; set; }
+
+        public SettingModel()
+        {
+            CreatedOn = SqlDateTime.MinValue.Value;
+            UpdatedOn = SqlDateTime.MinValue.Value;
+        }
     }
 }

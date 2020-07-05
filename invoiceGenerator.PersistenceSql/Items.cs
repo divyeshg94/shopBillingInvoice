@@ -73,8 +73,8 @@ namespace invoiceGenerator.PersistenceSql
             try
             {
                 var addItemSql =
-                    @"INSERT INTO [Items] (Name, Category, Price, Size, IsProduced, IsAvailable )
-                                        VALUES (@Name, @Category, @Price, @Size, @IsProduced, @IsAvailable )";
+                    @"INSERT INTO [Items] (Name, Category, Price, Type, Size, IsProduced, IsAvailable )
+                                        VALUES (@Name, @Category, @Price, @Type, @Size, @IsProduced, @IsAvailable )";
                                     
                 using (var connection = OpenConnection())
                 {
@@ -95,7 +95,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static void UpdateItem(ItemsModel item)
         {
-            var updateItemSql = @"Update [Items] SET Name = @Name, Category = @Category, Price = @Price, Size = @Size, IsProduced = @IsProduced, IsAvailable = @IsAvailable
+            var updateItemSql = @"Update [Items] SET Name = @Name, Category = @Category, Price = @Price, Type = @Type, Size = @Size, IsProduced = @IsProduced, IsAvailable = @IsAvailable
                                         WHERE Id = @Id";
             try
             {

@@ -7,10 +7,12 @@ using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 
 namespace InvoiceAPI.Controllers
 {
+    [RoutePrefix("employee")]
     public class EmployeeController : ApiController
     {
         // GET: Employee
         [HttpGet]
+        [Route("")]
         public List<EmployeeModel> GetAllEmployees()
         {
             var employees = Employee.GetAllEmployees();
@@ -18,12 +20,14 @@ namespace InvoiceAPI.Controllers
         }
 
         [HttpGet]
-        public EmployeeModel GetEmployee(string name, string phoneNumber)
+        [Route("name")]
+        public EmployeeModel GetEmployee(string name = "", string phoneNumber = "")
         {
             return Employee.GetEmployee(name, phoneNumber);
         }
 
         [HttpGet]
+        [Route("id")]
         public EmployeeModel GetEmployee(int employeeId)
         {
             return Employee.GetEmployee(employeeId);

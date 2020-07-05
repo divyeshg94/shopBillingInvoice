@@ -13,7 +13,7 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getSettingSql = @"SELECT Id, Key, Value, Group, CreatedOn, UpdatedOn FROM [Settings] WHERE [Key] = @Key";
+                var getSettingSql = @"SELECT Id, [Key], [Value], [Group], CreatedOn, UpdatedOn FROM [Settings] WHERE [Key] = @Key";
                 using (var connection = OpenConnection())
                 {
                     var setting = connection.QueryFirstOrDefault<SettingModel>(getSettingSql, new { @Key = key});
@@ -30,7 +30,7 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getSettingSql = @"SELECT Id, Key, Value, Group, CreatedOn, UpdatedOn FROM [Settings] WHERE [Group] = @Group";
+                var getSettingSql = @"SELECT Id, [Key], [Value], [Group], CreatedOn, UpdatedOn FROM [Settings] WHERE [Group] = @Group";
                 using (var connection = OpenConnection())
                 {
                     var settings = connection.Query<SettingModel>(getSettingSql, new { @Group = group }).ToList();
@@ -48,7 +48,7 @@ namespace invoiceGenerator.PersistenceSql
             try
             {
                 var addSettingSql =
-                    @"INSERT INTO [Settings] (Key, Value, Group, CreatedOn, UpdatedOn)
+                    @"INSERT INTO [Settings] ([Key], [Value], [Group], CreatedOn, UpdatedOn)
                                         VALUES (@Key, @Value, @Group, @CreatedOn, @UpdatedOn);
                                         SELECT CAST(SCOPE_IDENTITY() as int)";
                                     
@@ -69,9 +69,32 @@ namespace invoiceGenerator.PersistenceSql
             }
         }
 
-        public static void UpdateEmployee(SettingModel setting)
+        public static async Task UpdateSettingByKey(SettingModel setting)
         {
-            var updateSettingSql = @"Update Settings SET Value = @Value, UpdatedOn = @UpdatedOn, Group = @Group
+            var updateSettingSql = @"Update Settings SET [Value] = @Value, UpdatedOn = @UpdatedOn, [Group] = @Group
+                                        WHERE Key = @Key";
+            try
+            {
+                var getSetting = GetSetting(setting.Key);
+                if(getSetting == null)
+                {
+                    await AddSetting(setting);
+                    return;
+                }
+                using (var connection = OpenConnection())
+                {
+                    connection.Execute(updateSettingSql, setting);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static void UpdateSettings(SettingModel setting)
+        {
+            var updateSettingSql = @"Update Settings SET [Value] = @Value, UpdatedOn = @UpdatedOn, [Group] = @Group
                                         WHERE Id = @Id";
             try
             {
@@ -86,7 +109,7 @@ namespace invoiceGenerator.PersistenceSql
             }
         }
 
-        public static void DeleteEmployee(int settingId)
+        public static void DeleteSetting(int settingId)
         {
             var deleteSettingSql = @"Delete Settings WHERE Id = @Id";
             try

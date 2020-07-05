@@ -46,6 +46,63 @@ namespace invoiceGenerator.PersistenceSql
             }
         }
 
+        public static async Task<InvoiceModel> GetInvoice(int invoiceId)
+        {
+            try
+            {
+                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, 
+		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice
+                                        FROM Invoice i INNER JOIN InvoiceItems iitem on i.Id = iitem.InvoiceId where i.Id = @Id";
+                using (var connection = OpenConnection())
+                {
+                    var invoice = connection.Query<InvoiceModel>(getInvoiceSql, new { @Id = invoiceId}).Single();
+                    return invoice;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static async Task<List<InvoiceModel>> GetInvoiceByCustomer(int customerId)
+        {
+            try
+            {
+                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, 
+		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice
+                                        FROM Invoice i INNER JOIN InvoiceItems iitem on i.Id = iitem.InvoiceId where i.CustomerId = @Id";
+                using (var connection = OpenConnection())
+                {
+                    var invoices = connection.Query<List<InvoiceModel>>(getInvoiceSql, new { @Id = customerId }).Single();
+                    return invoices;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static async Task<List<InvoiceModel>> GetInvoiceByEmployee(int employeeId)
+        {
+            try
+            {
+                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, 
+		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice
+                                        FROM Invoice i INNER JOIN InvoiceItems iitem on i.Id = iitem.InvoiceId where i.EmployeeId = @Id";
+                using (var connection = OpenConnection())
+                {
+                    var invoices = connection.Query<List<InvoiceModel>>(getInvoiceSql, new { @Id = employeeId }).Single();
+                    return invoices;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static async Task<int> AddInvoice(InvoiceModel invoice)
         {
             try
@@ -54,8 +111,8 @@ namespace invoiceGenerator.PersistenceSql
                     @"INSERT INTO [Invoice] (EmployeeId, CustomerId, TotalAmount, SaleDate)
                                         VALUES (@EmployeeId, @CustomerId, @TotalAmount, @SaleDate);
                                         SELECT CAST(SCOPE_IDENTITY() as int)";
-                var addInvoiceItemsSql = @"INSERT INTO [InvoiceItems] (InvoiceId, ItemId, Cost, Quantity)
-                                        VALUES (@InvoiceId, @ItemId, @Cost, @Quantity)";
+                var addInvoiceItemsSql = @"INSERT INTO [InvoiceItems] (InvoiceId, ItemId, UnitPrice, Quantity, TotalPrice)
+                                        VALUES (@InvoiceId, @ItemId, @UnitPrice, @Quantity, @TotalPrice)";
 
                 using (var connection = OpenConnection())
                 {
