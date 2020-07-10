@@ -21,7 +21,7 @@ namespace InvoiceGenerator.Models
     public class EmployeeAttendanceQueryModel
     {
         public int EmployeeId { get; set; }
-        public int TotalWorkingDays { get; set; }
+        public float TotalWorkingDays { get; set; }
         public DateTime QueryStartTime { get; set; }
         public DateTime QueryEndTime { get; set; }
     }

@@ -58,8 +58,12 @@ namespace invoiceGenerator.PersistenceSql
                 using (var connection = OpenConnection())
                 {
                     var checkIn = await connection.QueryFirstOrDefaultAsync<EmployeeAttendanceModel>(getTodayCheckIn, new { @EmployeeId = employeeId});
+                   if(checkIn == null)
+                    {
+                        throw new Exception("CheckIn not availble for the employee");
+                    }
                     TimeSpan duration = DateTime.UtcNow.Subtract(checkIn.CheckIn);
-                    connection.Execute(updateEmployeeSql, new { @Id = checkIn.Id, @Checkout = DateTime.UtcNow, @Duration  = duration });
+                    connection.Query(updateEmployeeSql, new { @Id = checkIn.Id, @Checkout = DateTime.UtcNow, @Duration  = duration.TotalMinutes });
                 }
             }
             catch (Exception ex)

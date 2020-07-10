@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
+using InvoiceGenerator.Service.Service;
 
 namespace InvoiceAPI.Controllers
 {
@@ -32,11 +34,11 @@ namespace InvoiceAPI.Controllers
         }
 
         [HttpGet]
-        [Route("duration")]
-        public async Task<List<EmployeeAttendanceModel>> EmployeeAttendanceDuration(int employeeId, DateTime startTime, DateTime endTime)
+        [Route("workingDays")]
+        public async Task<EmployeeAttendanceQueryModel> EmployeeWorkingDays(int employeeId, DateTime startTime, DateTime endTime)
         {
-            var duration = await EmployeeAttendance.GetEmployeeAttendanceForDuration(employeeId, startTime, endTime);
-            return duration;
+            var employeeAttendanceService = new EmployeeService();
+            return await employeeAttendanceService.EmployeeWorkingDays(employeeId, startTime, endTime);
         }
     }
 }

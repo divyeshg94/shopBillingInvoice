@@ -39,5 +39,31 @@ namespace InvoiceGeneratorTests
             };
             Customer.UpdateCustomer(customer);
         }
+
+        [TestMethod]
+        public void GetCustomerDetails()
+        {
+            var customer = Customer.GetAllCustomers().FirstOrDefault();
+            var Customers = Customer.GetCustomerDetails(customer.Id);
+        }
+
+        [TestMethod]
+        public void AddOrUpdateCustomerDetails()
+        {
+            var customer = Customer.GetAllCustomers().FirstOrDefault();
+            var customerDetails = new CustomerDetailsModel()
+            {
+                IsSensitiveSkin = false,
+                HairType = "Dry",
+                SkinType = "Oily",
+                MedicalHistory = "Cosmetic Surgery",
+                Problems = "Frizzy Hair",
+                CurrentProducts = "Dove shampoo and conditioner",
+                Allergies = "Synus",
+                CustomerId = customer.Id
+            };
+            Customer.AddOrUpdateCustomerDetails(customerDetails);
+        }
+
     }
 }

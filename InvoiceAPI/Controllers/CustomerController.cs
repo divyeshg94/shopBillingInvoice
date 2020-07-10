@@ -42,5 +42,19 @@ namespace InvoiceAPI.Controllers
         {
             Customer.UpdateCustomer(customer);
         }
+
+        [HttpGet]
+        [Route("details")]
+        public async Task<CustomerDetailsModel> GetCustomerDetails(int customerId)
+        {
+            return Customer.GetCustomerDetails(customerId);
+        }
+
+        [HttpPost]
+        [Route("details")]
+        public async Task AddCustomerDetails(CustomerDetailsModel customerDetails)
+        {
+            Customer.AddOrUpdateCustomerDetails(customerDetails);
+        }
     }
 }

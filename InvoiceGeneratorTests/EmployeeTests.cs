@@ -2,6 +2,7 @@
 using System.Linq;
 using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
+using InvoiceGenerator.Service.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InvoiceGeneratorTests
@@ -78,13 +79,14 @@ namespace InvoiceGeneratorTests
         }
 
         [TestMethod]
-        public void GetEmployeeAttendanceDuration()
+        public void GetEmployeeWorkingDays()
         {
             var employees = Employee.GetAllEmployees();
             var employee = employees.FirstOrDefault();
             var endDate = DateTime.UtcNow;
             var startDate = new DateTime(endDate.Year, endDate.Month, 1);
-            var duration = EmployeeAttendance.GetEmployeeAttendanceForDuration(employee.Id, startDate, endDate).Result;
+            var employeeService = new EmployeeService();
+            var duration = employeeService.EmployeeWorkingDays(employee.Id, startDate, endDate).Result;
         }
     }
 }
