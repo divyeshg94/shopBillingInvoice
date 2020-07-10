@@ -14,9 +14,9 @@ namespace InvoiceAPI.Controllers
         // GET: customer
         [HttpGet]
         [Route("")]
-        public List<InvoiceModel> GetAllInvoices(DateTime from, DateTime to)
+        public async Task<List<InvoiceModel>> GetAllInvoices(DateTime from, DateTime to)
         {
-            return Invoice.GetAllInvoices(from, to);
+            return await Invoice.GetAllInvoices(from, to);
         }
         
         [HttpGet]

@@ -1,0 +1,10 @@
+.invoiceForm div{
+    margin: 15px 0;
+}
+
+.invoice{
+    padding: 1%;
+    border: 1px solid gray;
+    width: 800px;
+    border-radius: 2px;
+}

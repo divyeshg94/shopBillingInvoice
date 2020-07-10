@@ -15,7 +15,7 @@ namespace InvoiceGeneratorTests
         public void GetInvoices()
         {
             var from = new DateTime(2018, 03, 01);
-            var to = new DateTime(2019, 03, 30);
+            var to = new DateTime(2020, 12, 30);
             var invoices = Invoice.GetAllInvoices(from, to);
         }
 
@@ -48,6 +48,22 @@ namespace InvoiceGeneratorTests
 
             var  emailHelper = new EmailHelper();
             emailHelper.SendInvoiceMail(invoice);
+        }
+
+        [TestMethod]
+        public void GetInvoiceByCustomer()
+        {
+            var customers = Customer.GetAllCustomers();
+            var customer = customers.FirstOrDefault(); 
+            var invoice = Invoice.GetInvoiceByCustomer(customer.Id).Result;
+        }
+
+        [TestMethod]
+        public void GetInvoiceByEmployee()
+        {
+            var employees = Employee.GetAllEmployees();
+            var employee = employees.FirstOrDefault();
+            var invoice = Invoice.GetInvoiceByEmployee(employee.Id).Result;
         }
     }
 }

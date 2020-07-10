@@ -1,24 +1,75 @@
-<!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-  <ng-container matColumnDef="position">
-    <th mat-header-cell *matHeaderCellDef> No. </th>
-    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="name">
-    <th mat-header-cell *matHeaderCellDef> Name </th>
-    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="weight">
-    <th mat-header-cell *matHeaderCellDef> Weight </th>
-    <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="symbol">
-    <th mat-header-cell *matHeaderCellDef> Symbol </th>
-    <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table> -->
+<div class='container invoice' >
+    <form #form="ngForm" class='col-sm-12 invoiceForm' name='invoiceForm' (ngSubmit)="submitInvoice()">
+        <div class="row">
+          <label class="col-sm-4"> Customer Name </label>
+          <input type='text' [(ngModel)]="customer.name" name='customerName' class="col-sm-6" />
+        </div>
+        <div  class="row">
+          <label class="col-sm-4"> Phone Number </label>
+          <input type='text' [(ngModel)]="customer.phoneNumber" name='phoneNumber' class="col-sm-6"/>
+        </div>
+        <div class="row">
+          <!-- <label class="col-sm-4"> Services </label>
+          
+          <button class="col-sm-1 btn btn-primary" (click)="addService(service.id)" style="margin: 0 5px">Add</button> -->
+          <label class="col-sm-4"> Email Id </label>
+          <input type='text' [(ngModel)]="customer.email" name='email' class="col-sm-6"/>
+        </div>
+        <div  class="row">
+          <label class="col-sm-4"> Serviced By </label>
+          <input type='text' [(ngModel)]="customer.employee.id" name='servicedBy' class="col-sm-6"/>
+        </div>
+        <div  class="row">
+          <label class="col-sm-4"> Services </label>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" (click)="addItems()" style="margin: 0 5px" data-whatever="@mdo">Add Items</button>
+        </div>
+        <div  class="row">
+          <table>
+            <tr>
+              <td>Item No</td>
+              <td>Invoice Item</td>
+              <td>Cost per unit</td>
+              <td>No. of Units</td>
+              <td>Cost</td>
+            </tr>
+            <tr *ngFor="let item of invoiceItems">
+                <td>{{item.id}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.costPerUnit}}</td>
+                <td>{{item.noOfUnits}}</td>
+                <td>{{item.noOfUnits*item.costPerUnit}}</td>
+            </tr>
+          </table>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="itemModal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Item</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Item Name</label>
+            <select class='form-control' [(ngModel)]="service.name" class="col-sm-6">
+              <option *ngFor="let service of servicesList" [value]="service.id" >{{service.name}}></option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Cost per Unit</label>
+            <input type='text' [(ngModel)]="service.costPerUnit" name='costPerUnit' class="col-sm-6"/>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Add Item</button>
+      </div>
+    </div>
+  </div>
+</div>

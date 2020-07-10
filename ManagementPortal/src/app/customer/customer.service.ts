@@ -17,7 +17,7 @@ const httpOptions = {
 })
 
 export class CustomerService {
-  controller = "Customer";
+  controller = "customer";
 
   constructor(
     private http: HttpClient) {
@@ -25,19 +25,19 @@ export class CustomerService {
 
   async getAllCustomers(): Promise<Customer[]> {
     var httpOptions = this.getHttpOptions();
-    var url = baseUrl + this.controller + "/GetAll";
+    var url = baseUrl + this.controller;
     return await this.http.get<Customer[]>(url, httpOptions).toPromise();
   }
 
   async addCustomer(customer : Customer) {
     var httpOptions = this.getHttpOptions();
-    var url = baseUrl + this.controller + "/Add";
+    var url = baseUrl + this.controller;
     return await this.http.post(url, customer, httpOptions).toPromise();
   }
 
   async updateCustomer(customer : Customer) {
     var httpOptions = this.getHttpOptions();
-    var url = baseUrl + this.controller + "/update";
+    var url = baseUrl + this.controller;
     return await this.http.put(url, customer, httpOptions).toPromise();
   }
 

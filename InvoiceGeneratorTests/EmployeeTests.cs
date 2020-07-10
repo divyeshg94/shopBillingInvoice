@@ -16,7 +16,7 @@ namespace InvoiceGeneratorTests
         }
 
         [TestMethod]
-        public async void AddEmployee()
+        public void AddEmployee()
         {
             var employee = new EmployeeModel()
             {
@@ -27,7 +27,7 @@ namespace InvoiceGeneratorTests
                 JoinedOn = DateTime.UtcNow,
                 ReleavedOn = null
             };
-            await Employee.AddEmployee(employee);
+            Employee.AddEmployee(employee);
         }
 
         [TestMethod]
@@ -51,6 +51,40 @@ namespace InvoiceGeneratorTests
         {
             var employee = Employee.GetAllEmployees().First();
             Employee.DeleteEmployee(employee.Id);
+        }
+
+        [TestMethod]
+        public void CheckInEmployee()
+        {
+            var employees = Employee.GetAllEmployees();
+            var employee = employees.FirstOrDefault();
+            var checkIn = EmployeeAttendance.CheckinEmployee(employee.Id);
+        }
+
+        [TestMethod]
+        public void CHeckOutEmployee()
+        {
+            var employees = Employee.GetAllEmployees();
+            var employee = employees.FirstOrDefault();
+            var checkout = EmployeeAttendance.CheckoutEmployee(employee.Id);
+        }
+
+        [TestMethod]
+        public void GetEmployeeAttendance()
+        {
+            var employees = Employee.GetAllEmployees();
+            var employee = employees.FirstOrDefault();
+            var attendance = EmployeeAttendance.GetEmployeeAttendance(employee.Id);
+        }
+
+        [TestMethod]
+        public void GetEmployeeAttendanceDuration()
+        {
+            var employees = Employee.GetAllEmployees();
+            var employee = employees.FirstOrDefault();
+            var endDate = DateTime.UtcNow;
+            var startDate = new DateTime(endDate.Year, endDate.Month, 1);
+            var duration = EmployeeAttendance.GetEmployeeAttendanceForDuration(employee.Id, startDate, endDate).Result;
         }
     }
 }

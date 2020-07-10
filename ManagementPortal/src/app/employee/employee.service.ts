@@ -27,19 +27,19 @@ export class EmployeeService {
 
   async getAllEmployees(): Promise<Employee[]> {
     var httpOptions = this.getHttpOptions();
-    var url = baseUrl + this.controller + "/getallemployees";
+    var url = baseUrl + this.controller;
     return await this.http.get<Employee[]>(url, httpOptions).toPromise();
   }
 
   async addEmployee(employee : Employee) {
     var httpOptions = this.getHttpOptions();
-    var url = baseUrl + this.controller + "/AddEmployee";
+    var url = baseUrl + this.controller;
     return await this.http.post(url, employee, httpOptions).toPromise();
   }
 
   async updateEmployee(employee : Employee) {
     var httpOptions = this.getHttpOptions();
-    var url = baseUrl + this.controller + "/updateEmployee";
+    var url = baseUrl + this.controller;
     return await this.http.put(url, employee, httpOptions).toPromise();
   }
 
