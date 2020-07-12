@@ -32,12 +32,14 @@ namespace InvoiceAPI.Controllers
         }
 
         [HttpPost]
+        [Route("")]
         public async Task Add(CustomerModel customer)
         {
             await Customer.AddCustomer(customer);
         }
 
         [HttpPut]
+        [Route("")]
         public void Update(CustomerModel customer)
         {
             Customer.UpdateCustomer(customer);

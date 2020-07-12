@@ -9,11 +9,18 @@ namespace invoiceGenerator.PersistenceSql
 {
     public class EmployeeAttendance: Repository
     {
+        public string AadharNo { get; set; }
+        public string Photo { get; set; }
+        public string AadharImage { get; set; }
+        public string Address { get; set; }
+        public string EmailId { get; set; }
+
         public static List<EmployeeAttendanceModel> GetEmployeeAttendance(int employeeId)
         {
             try
             {
-                var getEmployeeAttendanceSql = @"SELECT Id, EmployeeId, CheckIn, Checkout, Duration, IsPresent FROM [EmployeeAttendance] WHERE EmployeeId = @EmployeeId";
+                var getEmployeeAttendanceSql = @"SELECT Id, EmployeeId, CheckIn, Checkout, Duration, IsPresent
+                                                    FROM [EmployeeAttendance] WHERE EmployeeId = @EmployeeId";
                 using (var connection = OpenConnection())
                 {
                     var employeeAttendance = connection.Query<EmployeeAttendanceModel>(getEmployeeAttendanceSql, new { @EmployeeId = employeeId}).ToList();

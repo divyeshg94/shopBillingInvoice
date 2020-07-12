@@ -4,6 +4,7 @@ using System.Linq;
 using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Service.EmailService;
+using InvoiceGenerator.Service.Service;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace InvoiceGeneratorTests
@@ -64,6 +65,13 @@ namespace InvoiceGeneratorTests
             var employees = Employee.GetAllEmployees();
             var employee = employees.FirstOrDefault();
             var invoice = Invoice.GetInvoiceByEmployee(employee.Id).Result;
+        }
+
+        [TestMethod]
+        public void GeneratePdf()
+        {
+            var invoiceService = new InvoiceService();
+            invoiceService.ConstructInvoicePdf();
         }
     }
 }

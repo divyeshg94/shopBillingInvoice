@@ -13,7 +13,7 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getAllEmployeesSql = @"SELECT Id, EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists FROM [Employees]";
+                var getAllEmployeesSql = @"SELECT Id, EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists, AadharNo, Photo, AadharImage, Address, EmailId FROM [Employees]";
                 using (var connection = OpenConnection())
                 {
                     var allEmployee = connection.Query<EmployeeModel>(getAllEmployeesSql).ToList();
@@ -28,7 +28,7 @@ namespace invoiceGenerator.PersistenceSql
 
         public static EmployeeModel GetEmployee(int employeeId)
         {
-            var getEmployeeSql = @"SELECT  Id, EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists FROM [EMPLOYEES] WHERE Id = @Id";
+            var getEmployeeSql = @"SELECT Id, EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists, AadharNo, Photo, AadharImage, Address, EmailId FROM [EMPLOYEES] WHERE Id = @Id";
             using (var connection = OpenConnection())
             {
                 var employee = connection.QueryFirstOrDefault<EmployeeModel>(getEmployeeSql, new {@Id = employeeId });
@@ -38,10 +38,13 @@ namespace invoiceGenerator.PersistenceSql
 
         public static EmployeeModel GetEmployee(string name, string phoneNumber)
         {
-            var getEmployeeSql = @"SELECT EmployeeId FROM [EMPLOYEES] WHERE Name = @name";
-            if (!string.IsNullOrEmpty(phoneNumber))
+            var getEmployeeSql = @"SELECT Id, EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists, AadharNo, Photo, AadharImage, Address, EmailId FROM [EMPLOYEES] WHERE ";
+
+            if (!string.IsNullOrEmpty(phoneNumber) || !string.IsNullOrEmpty(name))
             {
-                getEmployeeSql += @" and PhoneNumber = @phoneNumber";
+                getEmployeeSql += string.IsNullOrEmpty(name) ? "" : " Name like @name ";
+                getEmployeeSql += !string.IsNullOrEmpty(name) && !string.IsNullOrEmpty(phoneNumber) ? " and " : "";
+                getEmployeeSql += @" PhoneNumber = @phoneNumber";
             }
 
             using (var connection = OpenConnection())
@@ -60,8 +63,8 @@ namespace invoiceGenerator.PersistenceSql
             try
             {
                 var addEmployeeSql =
-                    @"INSERT INTO [EMPLOYEES] (EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists)
-                                        VALUES (@EmployeeId, @Name, @PhoneNumber, @JoinedOn, @ReleavedOn, @IsExists);
+                    @"INSERT INTO [EMPLOYEES] (EmployeeId, Name, PhoneNumber, JoinedOn, ReleavedOn, IsExists, AadharNo, Photo, AadharImage, Address, EmailId)
+                                        VALUES (@EmployeeId, @Name, @PhoneNumber, @JoinedOn, @ReleavedOn, @IsExists, @AadharNo, @Photo, @AadharImage, @Address, @EmailId);
                                         SELECT CAST(SCOPE_IDENTITY() as int)";
                                     
                 using (var connection = OpenConnection())
@@ -83,7 +86,9 @@ namespace invoiceGenerator.PersistenceSql
 
         public static void UpdateEmployee(EmployeeModel employee)
         {
-            var updateEmployeeSql = @"Update EMPLOYEES SET EmployeeId = @EmployeeId, Name = @Name, PhoneNumber = @PhoneNumber, JoinedOn  = @JoinedOn, ReleavedOn = @ReleavedOn, IsExists = @IsExists
+            var updateEmployeeSql = @"Update EMPLOYEES SET EmployeeId = @EmployeeId, Name = @Name, PhoneNumber = @PhoneNumber, 
+                                        JoinedOn  = @JoinedOn, ReleavedOn = @ReleavedOn, IsExists = @IsExists, AadharNo = @AadharNo,
+                                        Photo = @Photo, AadharImage = @AadharImage, Address = @Address, EmailId = @EmailId
                                         WHERE Id = @Id";
             try
             {

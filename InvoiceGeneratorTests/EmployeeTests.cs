@@ -17,6 +17,12 @@ namespace InvoiceGeneratorTests
         }
 
         [TestMethod]
+        public void GetEmployee()
+        {
+            var employee = Employee.GetEmployee("Divyesh", "9566582129");
+        }
+
+        [TestMethod]
         public void AddEmployee()
         {
             var employee = new EmployeeModel()
@@ -63,7 +69,7 @@ namespace InvoiceGeneratorTests
         }
 
         [TestMethod]
-        public void CHeckOutEmployee()
+        public void CheckOutEmployee()
         {
             var employees = Employee.GetAllEmployees();
             var employee = employees.FirstOrDefault();
