@@ -1,18 +1,18 @@
-<header class='clearfix'>
+﻿<header class='clearfix'>
     <h1 style="text-align: center;">INVOICE</h1>
     <div class="row">
         <div class="column">
             <div class="grid-container">
                 <div class="grid-item left">Invoice Id</div>
-                <div class="grid-item right">%invoiceId%</div>
+                <div class="grid-item right">%InvoiceId%</div>
                 <div class="grid-item left">Date</div>
-                <div class="grid-item right">2020 Jul 12</div>
+                <div class="grid-item right">%Date%</div>
                 <div class="grid-item left">Customer Name</div>
-                <div class="grid-item right">Divyesh</div>
+                <div class="grid-item right">%CustomerName%</div>
                 <div class="grid-item left">Email Id</div>
-                <div class="grid-item right">divyeshgovardhanan@gmail.com</div>
+                <div class="grid-item right">%CustomerEmailId%</div>
                 <div class="grid-item left">Ph</div>
-                <div class="grid-item right">9566582129</div>
+                <div class="grid-item right">%CustomerPhone%</div>
             </div>
         </div>
         <div class="column pull-right">
@@ -63,70 +63,3 @@
     </div>
 </main>
 <footer>Invoice was created on a computer and is valid without the signature and seal.</footer>
-
-<style>
-    .grid-container {
-        display: grid;
-        grid-template-columns: auto auto;
-        background-color: #b0c7da;
-        /* padding: 5px; */
-        width:396px;
-        font-size: 24px;
-    }
-
-    .grid-item {
-        background-color: rgba(255, 255, 255, 0.8);
-        /* border: 0px solid rgba(0, 0, 0, 0.8); */
-        padding: 5px;
-        text-align: left;
-        width: 200px;
-    }
-
-    .left{
-        border-right: 1px solid rgba(0, 0, 255, 0.8);
-        text-align: right;
-        width: 196px;
-    }
-
-    .right{
-        width: auto;
-    }
-
-    .column {
-        float: left;
-        width: 50%;
-    }
-
-    footer {
-        margin-top: 100%;
-    }
-
-    /* Clear floats after the columns */
-    .row:after {
-        content: "";
-        display: table;
-        clear: both;
-    }
-
-    table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
-
-    td,
-    th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-    }
-
-    tr:nth-child(even) {
-        background-color: #dddddd;
-    }
-
-    .pull-right {
-        text-align: right;
-        margin-right: 20px;
-    }
-</style>

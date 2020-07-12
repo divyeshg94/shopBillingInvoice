@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
@@ -46,9 +47,11 @@ namespace InvoiceGeneratorTests
 
             invoice.TotalAmount = totalCost.ToString();
             Invoice.AddInvoice(invoice);
+            var invoiceService = new InvoiceService();
+            var invoicePath = invoiceService.ConstructInvoicePdf(invoice);
 
-            var  emailHelper = new EmailHelper();
-            emailHelper.SendInvoiceMail(invoice);
+            var emailHelper = new EmailHelper();
+            emailHelper.SendInvoiceMail(invoice, invoicePath);
         }
 
         [TestMethod]
@@ -70,8 +73,9 @@ namespace InvoiceGeneratorTests
         [TestMethod]
         public void GeneratePdf()
         {
+            var invoice = Invoice.GetAllInvoices(new DateTime(2020, 01, 01), DateTime.UtcNow).Result;
             var invoiceService = new InvoiceService();
-            invoiceService.ConstructInvoicePdf();
+            invoiceService.ConstructInvoicePdf(invoice.FirstOrDefault());
         }
     }
 }

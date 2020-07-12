@@ -31,7 +31,7 @@ namespace InvoiceGenerator.Service.EmailService
             return invoiceHtml.ToString();
         }
 
-        public void SendInvoiceMail(InvoiceModel invoiceToGenerate)
+        public void SendInvoiceMail(InvoiceModel invoiceToGenerate, string invoicePath)
         {
             invoiceToGenerate.Customer = Customer.GetCustomer(invoiceToGenerate.CustomerId);
             invoiceToGenerate.Employee = Employee.GetEmployee(invoiceToGenerate.EmployeeId);
@@ -51,6 +51,7 @@ namespace InvoiceGenerator.Service.EmailService
                 try
                 {
                     mailMessage.IsBodyHtml = true;
+                    mailMessage.Attachments.Add(new Attachment(invoicePath));
                     using (SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587))
                     {
                         smtpClient.Host = "smtp.gmail.com";

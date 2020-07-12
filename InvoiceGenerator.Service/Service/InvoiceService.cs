@@ -1,17 +1,22 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using invoiceGenerator.PersistenceSql;
 using InvoiceGenerator.Models;
 using InvoiceGenerator.Service.EmailService;
 using iTextSharp.text;
-using iTextSharp.text.html.simpleparser;
 using iTextSharp.text.pdf;
 
 namespace InvoiceGenerator.Service.Service
 {
     public class InvoiceService
     {
+        public static readonly string EmailTemplatesFolderPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EmailTemplates");
+
         public async Task AddInvoice(InvoiceModel invoice)
         {
             await Invoice.AddInvoice(invoice);
@@ -22,107 +27,116 @@ namespace InvoiceGenerator.Service.Service
             if (isSendMailForInvoice)
             {
                 var emailHelper = new EmailHelper();
-                emailHelper.SendInvoiceMail(invoice);
+                var invoicePath = ConstructInvoicePdf(invoice);
+                emailHelper.SendInvoiceMail(invoice, invoicePath);
             }
         }
 
         public async Task SendEmailForInvoice(int invoiceId)
         {
             var invoice = await Invoice.GetInvoice(invoiceId);
+            var invoicePath = ConstructInvoicePdf(invoice);
             var emailHelper = new EmailHelper();
-            emailHelper.SendInvoiceMail(invoice);
+            emailHelper.SendInvoiceMail(invoice, invoicePath);
         }
 
-        public async Task ConstructInvoicePdf()
+        public string ConstructInvoicePdf(InvoiceModel invoiceModel)
         {
-            StringBuilder sb = new StringBuilder();
-            sb.Append("<header class='clearfix'>");
-            sb.Append("<h1>INVOICE</h1>");
-            sb.Append("<div id='company' class='clearfix'>");
-            sb.Append("<div>Company Name</div>");
-            sb.Append("<div>455 John Tower,<br /> AZ 85004, US</div>");
-            sb.Append("<div>(602) 519-0450</div>");
-            sb.Append("<div><a href='mailto:company@example.com'>company@example.com</a></div>");
-            sb.Append("</div>");
-            sb.Append("<div id='project'>");
-            sb.Append("<div><span>PROJECT</span> Website development</div>");
-            sb.Append("<div><span>CLIENT</span> John Doe</div>");
-            sb.Append("<div><span>ADDRESS</span> 796 Silver Harbour, TX 79273, US</div>");
-            sb.Append("<div><span>EMAIL</span> <a href='mailto:john@example.com'>john@example.com</a></div>");
-            sb.Append("<div><span>DATE</span> April 13, 2016</div>");
-            sb.Append("<div><span>DUE DATE</span> May 13, 2016</div>");
-            sb.Append("</div>");
-            sb.Append("</header>");
-            sb.Append("<main>");
-            sb.Append("<table>");
-            sb.Append("<thead>");
-            sb.Append("<tr>");
-            sb.Append("<th class='service'>SERVICE</th>");
-            sb.Append("<th class='desc'>DESCRIPTION</th>");
-            sb.Append("<th>PRICE</th>");
-            sb.Append("<th>QTY</th>");
-            sb.Append("<th>TOTAL</th>");
-            sb.Append("</tr>");
-            sb.Append("</thead>");
-            sb.Append("<tbody>");
-            sb.Append("<tr>");
-            sb.Append("<td class='service'>Design</td>");
-            sb.Append("<td class='desc'>Creating a recognizable design solution based on the company's existing visual identity</td>");
-            sb.Append("<td class='unit'>$400.00</td>");
-            sb.Append("<td class='qty'>2</td>");
-            sb.Append("<td class='total'>$800.00</td>");
-            sb.Append("</tr>");
-            sb.Append("<tr>");
-            sb.Append("<td colspan='4'>SUBTOTAL</td>");
-            sb.Append("<td class='total'>$800.00</td>");
-            sb.Append("</tr>");
-            sb.Append("<tr>");
-            sb.Append("<td colspan='4'>TAX 25%</td>");
-            sb.Append("<td class='total'>$200.00</td>");
-            sb.Append("</tr>");
-            sb.Append("<tr>");
-            sb.Append("<td colspan='4' class='grand total'>GRAND TOTAL</td>");
-            sb.Append("<td class='grand total'>$1,000.00</td>");
-            sb.Append("</tr>");
-            sb.Append("</tbody>");
-            sb.Append("</table>");
-            sb.Append("<div id='notices'>");
-            sb.Append("<div>NOTICE:</div>");
-            sb.Append("<div class='notice'>A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>");
-            sb.Append("</div>");
-            sb.Append("</main>");
-            sb.Append("<footer>");
-            sb.Append("Invoice was created on a computer and is valid without the signature and seal.");
-            sb.Append("</footer>");
-
-            StringReader sr = new StringReader(sb.ToString());
-
-            Document pdfDoc = new Document(PageSize.A4, 10f, 10f, 10f, 0f);
-            HTMLWorker htmlparser = new HTMLWorker(pdfDoc);
-
-            using (MemoryStream memoryStream = new MemoryStream())
+            try
             {
-                var fs = new FileStream("D:\\Repo\\Personal\\shopBillingInvoice\\Invoice1.pdf", FileMode.Create);
-                PdfWriter writer = PdfWriter.GetInstance(pdfDoc, fs);
-                pdfDoc.Open();
+                List<string> cssFiles = new List<string>();
+                var invoiceFilePath = $"D:\\Repo\\Personal\\shopBillingInvoice\\{invoiceModel.Id}.pdf";
 
-                PdfContentByte content = writer.DirectContent;
-                Rectangle rectangle = new Rectangle(pdfDoc.PageSize);
-                rectangle.Left += pdfDoc.LeftMargin;
-                rectangle.Right -= pdfDoc.RightMargin;
-                rectangle.Top -= pdfDoc.TopMargin;
-                rectangle.Bottom += pdfDoc.BottomMargin;
-                content.SetColorStroke(BaseColor.BLACK);
-                content.Rectangle(rectangle.Left, rectangle.Bottom, rectangle.Width, rectangle.Height);
-                content.Stroke();
-                pdfDoc.SetMargins(20, 20, 20, 20);
+                cssFiles.Add(@"CustomerInvoiceTemplate.css");
 
-                htmlparser.Parse(sr);
-                pdfDoc.Close();
+                var output = new MemoryStream();
 
-                byte[] bytes = memoryStream.ToArray();
-                memoryStream.Close();
+                Dictionary<string, string> replacements = GetReplacements(invoiceModel);
+                var body = GetMailBody("CustomerInvoiceTemplate.html", replacements);
+                var input = new MemoryStream(Encoding.UTF8.GetBytes(body));
+
+                var document = new Document();
+                var fs = new FileStream(invoiceFilePath, FileMode.Create);
+                var writer = PdfWriter.GetInstance(document, fs);
+                writer.CloseStream = false;
+
+                document.Open();
+                var htmlContext = new iTextSharp.tool.xml.pipeline.html.HtmlPipelineContext(null);
+                htmlContext.SetTagFactory(iTextSharp.tool.xml.html.Tags.GetHtmlTagProcessorFactory());
+
+                iTextSharp.tool.xml.pipeline.css.ICSSResolver cssResolver = iTextSharp.tool.xml.XMLWorkerHelper.GetInstance().GetDefaultCssResolver(false);
+                cssResolver.FileRetrieve = new CustomFileRetiever(EmailTemplatesFolderPath);
+
+                var pipeline = new iTextSharp.tool.xml.pipeline.css.CssResolverPipeline(cssResolver, new iTextSharp.tool.xml.pipeline.html.HtmlPipeline(htmlContext, new iTextSharp.tool.xml.pipeline.end.PdfWriterPipeline(document, writer)));
+                var worker = new iTextSharp.tool.xml.XMLWorker(pipeline, true);
+                var p = new iTextSharp.tool.xml.parser.XMLParser(worker);
+                p.Parse(input);
+                document.Close();
+                output.Position = 0;
+                return invoiceFilePath;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
+
+        #region Private
+        private static Dictionary<string, string> GetReplacements(InvoiceModel invoiceModel)
+        {
+            var replacements = new Dictionary<string, string>();
+            replacements.Add("InvoiceId", invoiceModel.Id.ToString());
+            replacements.Add("Date", DateTime.UtcNow.ToString());
+            replacements.Add("CustomerName", invoiceModel.Customer.Name);
+            replacements.Add("CustomerEmailId", invoiceModel.Customer.EmailId);
+            replacements.Add("CustomerPhone", invoiceModel.Customer.PhoneNumber);
+            return replacements;
+        }
+
+        public static string GetMailBody(string bodyFileName, IDictionary replacements)
+        {
+            var body = ReadMailTemplate(bodyFileName);
+            return DoReplacements(body, replacements);
+        }
+
+        public static string ReadMailTemplate(string bodyFileName)
+        {
+            string body = string.Empty;
+            string fullFilePath = Path.Combine(EmailTemplatesFolderPath, bodyFileName);
+            TextReader textReader = (TextReader)new StreamReader(fullFilePath);
+            try
+            {
+                body = textReader.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            finally
+            {
+                textReader.Close();
+            }
+            return body;
+        }
+
+        public static string DoReplacements(string body, IDictionary replacements)
+        {
+            if (replacements != null && !string.IsNullOrEmpty(body))
+            {
+                foreach (object index in (IEnumerable)replacements.Keys)
+                {
+                    string pattern = "%" + index.ToString() + "%";
+                    string str = replacements[index] as string;
+                    if (pattern == null)
+                    { throw new ArgumentException("MailDefinition_InvalidReplacements"); }
+
+                    if (str == null) { str = String.Empty; }
+                    string replacement = str.Replace("$", "$$").Replace("\n", "<BR>");
+                    body = Regex.Replace(body, pattern, replacement, RegexOptions.IgnoreCase);
+                }
+            }
+            return body;
+        }
+        #endregion
     }
 }
