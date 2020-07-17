@@ -13,6 +13,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddCustomerDialog } from './customer/AddCustomerDialog';
+import { ItemComponent } from './item/item.component';
+import { EmployeeattendanceComponent } from './employeeattendance/employeeattendance.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { AddCustomerDialog } from './customer/AddCustomerDialog';
     EmployeeComponent,
     CustomerComponent,
     AddEmployeeDialog,
-    AddCustomerDialog
+    AddCustomerDialog,
+    ItemComponent,
+    EmployeeattendanceComponent
   ],
   imports: [
     RouterModule,

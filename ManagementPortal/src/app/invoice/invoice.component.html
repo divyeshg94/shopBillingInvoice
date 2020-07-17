@@ -1,19 +1,21 @@
-<div class='container invoice' >
+<div class='container invoice'>
     <form #form="ngForm" class='col-sm-12 invoiceForm' name='invoiceForm' (ngSubmit)="submitInvoice()">
         <div class="row">
           <label class="col-sm-4"> Customer Name </label>
-          <input type='text' [(ngModel)]="customer.name" name='customerName' class="col-sm-6" />
+          <select id="customerName" [(ngModel)]="invoiceModel.Id" name='customerName' class="col-sm-6">
+            <option *ngFor="let customer of customers" [value]="customer.Id">{{customer.Name}}</option>
+          </select>
         </div>
-        <div  class="row">
+        <!-- <div  class="row">
           <label class="col-sm-4"> Phone Number </label>
-          <input type='text' [(ngModel)]="customer.phoneNumber" name='phoneNumber' class="col-sm-6"/>
-        </div>
+          <input type='text' [(ngModel)]="customer.PhoneNumber" name='phoneNumber' class="col-sm-6"/>
+        </div> -->
         <div class="row">
           <!-- <label class="col-sm-4"> Services </label>
           
           <button class="col-sm-1 btn btn-primary" (click)="addService(service.id)" style="margin: 0 5px">Add</button> -->
           <label class="col-sm-4"> Email Id </label>
-          <input type='text' [(ngModel)]="customer.email" name='email' class="col-sm-6"/>
+          <input type='text' [(ngModel)]="customer.EmailId" name='email' class="col-sm-6"/>
         </div>
         <div  class="row">
           <label class="col-sm-4"> Serviced By </label>
