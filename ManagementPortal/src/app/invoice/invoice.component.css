@@ -4,7 +4,21 @@
 
 .invoice{
     padding: 1%;
-    border: 1px solid gray;
+    border: 0.5px solid gray;
     width: 800px;
-    border-radius: 2px;
+    border-radius: 10px;
+}
+
+.addItemForm .row{
+    margin: 15px 0;
+}
+
+.fa{
+    cursor: pointer;
+}
+
+.noItems{
+    background: lightgray;
+    padding: 10px;
+    border-radius: 3px;
 }

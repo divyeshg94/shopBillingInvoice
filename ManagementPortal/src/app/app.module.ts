@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddCustomerDialog } from './customer/AddCustomerDialog';
 import { ItemComponent } from './item/item.component';
 import { EmployeeattendanceComponent } from './employeeattendance/employeeattendance.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { EmployeeattendanceComponent } from './employeeattendance/employeeattend
     AddEmployeeDialog,
     AddCustomerDialog,
     ItemComponent,
-    EmployeeattendanceComponent
+    EmployeeattendanceComponent,
+    DashboardComponent
   ],
   imports: [
     RouterModule,

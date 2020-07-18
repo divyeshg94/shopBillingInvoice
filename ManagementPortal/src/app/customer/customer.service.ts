@@ -41,6 +41,19 @@ export class CustomerService {
     return await this.http.put(url, customer, httpOptions).toPromise();
   }
 
+  async getCustomer(name,phoneNumber): Promise<Customer> {
+    var httpOptions = this.getHttpOptions();
+    let urlParam = "";
+    if(name){
+      urlParam = "?name="+name;
+    } 
+    if(phoneNumber){
+      urlParam +=  urlParam == "" ? "?phoneNumber="+phoneNumber : "&phoneNumber="+phoneNumber;
+    }
+    var url = baseUrl + this.controller +'/name'+ urlParam;
+    return await this.http.get<Customer>(url, httpOptions).toPromise();
+  }
+
   getHttpOptions() {
     httpOptions.headers = httpOptions.headers.set('Access-Control-Allow-Origin', '*');
     httpOptions.headers = httpOptions.headers.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')

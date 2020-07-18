@@ -1,6 +1,7 @@
 <div class="ngContainer" *ngIf="!isLoading">
   <mat-toolbar [ngClass]="toolBar">
-      <span class="whiteColor">Management Portal</span>
+      <img src="../Crescent-Dark.png" style="height:90px;"/>
+      <!-- <span class="whiteColor">Crescent Beauty Lounge</span> -->
   </mat-toolbar>
 
   <mat-sidenav-container class="sidenav-container">
@@ -19,6 +20,9 @@
           </a>
           <a mat-list-item routerLink="customer" [routerLinkActive]="['active']">
             <mat-icon></mat-icon>&nbsp; <span i18n>Customer</span>
+          </a>
+          <a mat-list-item routerLink="item" [routerLinkActive]="['active']">
+            <mat-icon></mat-icon>&nbsp; <span i18n>Item</span>
           </a>
         </mat-accordion>
       </mat-nav-list>
