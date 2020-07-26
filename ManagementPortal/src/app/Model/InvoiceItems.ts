@@ -3,6 +3,7 @@ import { Item } from "./Item";
 
 export class InvoiceItems{
     Id: number;
+    SerialNumber: number;
     InvoiceId: number;
     Invoice: Invoice;
     ItemId: number;
@@ -10,4 +11,7 @@ export class InvoiceItems{
     UnitPrice: number;
     TotalPrice: number;
     Quantity: number;
+    ServicedBy: number;
+    DiscountPercent : number;
+    DiscountAmount : number;
 }

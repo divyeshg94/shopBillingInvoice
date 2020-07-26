@@ -1,11 +1,22 @@
 ﻿<header class='clearfix'>
     <h1 style="text-align: center;">INVOICE</h1>
+    <div class="column pull-right" style="width: 40%;">
+        <img src="%LogoPath%" alt="LOGO"></img>
+        <div>Argus Nagar,<br /> Hope college, Coimbatore - 641004</div>
+        <div>9566582129 | <a href='https://divyeshgovardhanan.wixsite.com/crescent'>Website</a></div>
+    </div>
+    <br/>
+	<div>
+	<div class="grid-item">Invoice Id | %InvoiceId%</div>
+	<div class="grid-item">Date | %Date%</div>
+	<div class="grid-item left">Customer Name</div>
+	</div>
     <div class="row">
         <div class="column">
             <div class="grid-container">
-                <div class="grid-item left">Invoice Id</div>
+                <div class="grid-item left">Invoice Id | %InvoiceId%</div>
                 <div class="grid-item right">%InvoiceId%</div>
-                <div class="grid-item left">Date</div>
+                <div class="grid-item left">Date | %Date%</div>
                 <div class="grid-item right">%Date%</div>
                 <div class="grid-item left">Customer Name</div>
                 <div class="grid-item right">%CustomerName%</div>
@@ -15,51 +26,20 @@
                 <div class="grid-item right">%CustomerPhone%</div>
             </div>
         </div>
-        <div class="column pull-right">
-            <img src="D:\Repo\Personal\shopBillingInvoice\crescentlogo.png" alt="LOGO"></img>
-            <div>Argus Nagar,<br /> Hope college, Coimbatore - 641004</div>
-            <div>9566582129 | <a href='https://divyeshgovardhanan.wixsite.com/crescent'>Website</a></div>
-        </div>
+
     </div>
 </header>
 <br />
 <main>
-    <h3>Invoice Items</h3>
+    <h3>Invoice Items:</h3>
+    <br/>
     <table>
-        <tr>
-            <th>S.No</th>
-            <th>Name</th>
-            <th>Unit Price</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Facial</td>
-            <td>Rs. 10</td>
-            <td>1</td>
-            <td>Rs. 10</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Hair Color</td>
-            <td>Rs. 10</td>
-            <td>1</td>
-            <td>Rs. 10</td>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td>Pedicure</td>
-            <td>Rs. 30</td>
-            <td>2</td>
-            <td>Rs. 60</td>
-        </tr>
+        %InvoiceItems%
     </table>
 
     <br />
     <div id='total'>
         <div>NOTICE:</div>
-        <div class=''>A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+        <div class=''>Invoice was created on a computer and is valid without the signature and seal.</div>
     </div>
 </main>
-<footer>Invoice was created on a computer and is valid without the signature and seal.</footer>

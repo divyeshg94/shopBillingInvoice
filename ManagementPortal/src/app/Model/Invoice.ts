@@ -8,9 +8,9 @@ export class Invoice{
     Customer: Customer;
     EmployeeId: number;
     Employee: Employee;
-    TotalAmount: string;
+    TotalAmount: number;
     SaleDate: Date;
-    DiscountPercentage: number;
+    DiscountPercent: number;
     DiscountAmount: number;
     TaxPercentage: number;
     Notes: string;

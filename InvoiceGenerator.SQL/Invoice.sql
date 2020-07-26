@@ -10,5 +10,7 @@
     [DiscountPercent] INT NULL, 
     [DiscountAmount] NVARCHAR(50) NULL, 
     [Tax] NVARCHAR(50) NULL, 
-    [Notes] VARCHAR(MAX) NULL
+    [Notes] VARCHAR(MAX) NULL,
+    ModeOfPayment int NOT NULL,
+    ModeOfPaymentString nvarchar(20) NOT NULL
 )

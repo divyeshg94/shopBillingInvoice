@@ -51,6 +51,7 @@
     <Compile Include="EmailService\EmailHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\CssFileRetriever.cs" />
+    <Compile Include="Service\DashboardService.cs" />
     <Compile Include="Service\EmployeeAttendanceService.cs" />
     <Compile Include="Service\InvoiceService.cs" />
   </ItemGroup>

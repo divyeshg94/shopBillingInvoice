@@ -11,8 +11,8 @@ namespace InvoiceGeneratorTests
         [TestMethod]
         public void DefaultSeed()
         {
-            UpdateSettings("FromEmail", "divyeshgovardhanan@gmail.com", "EmailSettings");
-            UpdateSettings("FromUserName", "divyeshgovardhanan@gmail.com", "EmailSettings");
+            UpdateSettings("FromEmail", "crescentbeautylounge@gmail.com", "EmailSettings");
+            UpdateSettings("FromUserName", "crescentbeautylounge@gmail.com", "EmailSettings");
             UpdateSettings("FromPassword", "Dhakshu020415", "EmailSettings");
             UpdateSettings("InvoiceSubject", "Invoice", "InvoiceSettings");
             UpdateSettings("IsInvoiceSendInEmail", true.ToString(), "InvoiceSettings");

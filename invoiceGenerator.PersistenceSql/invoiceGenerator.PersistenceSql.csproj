@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Analytics.cs" />
     <Compile Include="EmployeeAttendance.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Invoice.cs" />

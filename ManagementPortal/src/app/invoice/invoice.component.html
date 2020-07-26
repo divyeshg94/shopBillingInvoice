@@ -41,8 +41,8 @@
               <th>Item</th>
               <th>Cost per Unit</th>
               <th>Quantity</th>
-              <th>Cost</th>
               <th>Amount Disconted</th>
+              <th>Total Price</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -50,10 +50,10 @@
             <tr *ngFor="let item of items;let i = index;">
                 <td>{{i+1}}</td>
                 <td>{{item.Name}}</td>
-                <td><span class='fa fa-inr'></span> {{item.Price}}</td>
-                <td>{{item.quantity}}</td>
-                <td><span class='fa fa-inr'></span> {{item.quantity*item.Price}}</td>
-                <td><span class='fa fa-inr'></span> {{((item.discountPercentage/100)*item.quantity*item.Price).toFixed(2)}}</td>
+                <td><span class='fa fa-inr'></span> {{item.UnitPrice}}</td>
+                <td>{{item.Quantity}}</td>
+                <td><span class='fa fa-inr'></span> {{((item.DiscountPercent/100)*(item.TotalPrice)).toFixed(2)}}</td>
+                <td><span class='fa fa-inr'></span> {{item.TotalPrice}}</td>
                 <td>
                   <span class='fa fa-pencil p-1' (click)="editItem(item)"></span>
                   <span class='fa fa-trash p-1' (click)="deleteItem(item)"></span>
@@ -61,7 +61,11 @@
             </tr>
           </tbody>
         </table>
-          
+        <div *ngIf="items.length != 0">
+          <label class="col-sm-1 pull-right fa fa-inr"> {{invoiceModel.TotalAmount}}</label>  
+          <label class="col-sm-2 pull-right">Total Price -</label>
+        </div>
+
         <button type="button" class="btn btn-secondary m-2" (click)='clearInvoice()'>Discard</button>
         <button type="button" class="btn btn-success m-2" (click)='generateInvoice()'>Generate Invoice</button>
     </form>
@@ -79,32 +83,32 @@
         <form #form="ngForm" class='col-sm-12 addItemForm' name='addItemForm' >
           <div class="row">
             <label class="col-sm-4"> Item name </label>
-            <select id="itemId" [(ngModel)]="item.id" name='itemName' class="col-sm-8" (change)="getAttrValue('Price',item.id)">
+            <select id="itemId" [(ngModel)]="item.Id" name='itemName' class="col-sm-8" (change)="getAttrValue('Price',item.Id)">
               <option *ngFor="let it of servicesList" [value]="it.Id">{{it.Name}}</option>
             </select>
           </div>
           <div  class="row">
             <label class="col-sm-4"> Quantity </label>
-            <input type='text' [(ngModel)]="item.quantity" name='quantity' class="col-sm-8"/>
+            <input type='number' [(ngModel)]="item.Quantity" name='quantity' class="col-sm-8"/>
           </div>
           <div class="row">
             <label class="col-sm-4"> Cost per Unit </label>
-            <input type='text' [(ngModel)]="item.Price" name='Price' disabled class="col-sm-8"/>
+            <input type='number' [(ngModel)]="item.UnitPrice" name='Price' disabled class="col-sm-8"/>
           </div>
           <div class="row">
             <label class="col-sm-4"> Serviced By </label>
-            <select id="itemId" [(ngModel)]="item.employees" name='servicedBy' class="col-sm-8">
+            <select id="itemId" [(ngModel)]="item.ServicedBy" name='servicedBy' class="col-sm-8">
               <option *ngFor="let emp of employees" [value]="emp.Id">{{emp.Name}}</option>
             </select>
           </div>
-           <div  class="row">
+          <div  class="row">
             <label class="col-sm-4"> Discount % </label>
-            <input type='text' [(ngModel)]="item.discountPercentage" name='discountPercentage' class="col-sm-8"/>
-          </div> 
+            <input type='number' [(ngModel)]="item.DiscountPercent" name='discountPercent' class="col-sm-8"/>
+        </div> 
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModel(item)">Close</button>
         <button *ngIf='!isEditMode' type="button" class="btn btn-primary" (click)="addItemToInvoice()">Add Item to Invoice</button>
       </div>
     </div>

@@ -40,8 +40,8 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, 
-		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice
+                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, i.ModeOfPaymentString, i.ModeOfPayment,
+		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice, iitem.ServicedBy, iitem.DiscountPercentage, iitem.DiscountAmount
                                         FROM Invoice i INNER JOIN InvoiceItems iitem on i.Id = iitem.InvoiceId where i.Id = @Id";
                 using (var connection = OpenConnection())
                 {
@@ -59,8 +59,8 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, 
-		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice
+                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, i.ModeOfPaymentString, i.ModeOfPayment,
+		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice, iitem.ServicedBy, iitem.DiscountPercentage, iitem.DiscountAmount
                                         FROM Invoice i INNER JOIN InvoiceItems iitem on i.Id = iitem.InvoiceId where i.CustomerId = @Id";
                 using (var connection = OpenConnection())
                 {
@@ -79,8 +79,8 @@ namespace invoiceGenerator.PersistenceSql
         {
             try
             {
-                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, 
-		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice
+                var getInvoiceSql = @"SELECT i.CustomerId, i.EmployeeId, i.Id, i.TotalAmount, i.DiscountAmount, i.DiscountPercent, i.ModeOfPaymentString, i.ModeOfPayment, 
+		                                i.Notes, i.SaleDate, i.Tax, iitem.ItemId, iitem.Quantity, iitem.TotalPrice, iitem.UnitPrice, iitem.ServicedBy, iitem.DiscountPercentage, iitem.DiscountAmount
                                         FROM Invoice i INNER JOIN InvoiceItems iitem on i.Id = iitem.InvoiceId where i.EmployeeId = @Id";
                 using (var connection = OpenConnection())
                 {
@@ -100,11 +100,11 @@ namespace invoiceGenerator.PersistenceSql
             try
             {
                 var addInvoiceSql =
-                    @"INSERT INTO [Invoice] (EmployeeId, CustomerId, TotalAmount, SaleDate)
-                                        VALUES (@EmployeeId, @CustomerId, @TotalAmount, @SaleDate);
+                    @"INSERT INTO [Invoice] (EmployeeId, CustomerId, TotalAmount, SaleDate, DiscountPercent, DiscountAmount, Tax, Notes, ModeOfPayment, ModeOfPaymentString)
+                                        VALUES (@EmployeeId, @CustomerId, @TotalAmount, @SaleDate, @DiscountPercent, @DiscountAmount, @Tax, @Notes, @ModeOfPayment, @ModeOfPaymentString);
                                         SELECT CAST(SCOPE_IDENTITY() as int)";
-                var addInvoiceItemsSql = @"INSERT INTO [InvoiceItems] (InvoiceId, ItemId, UnitPrice, Quantity, TotalPrice)
-                                        VALUES (@InvoiceId, @ItemId, @UnitPrice, @Quantity, @TotalPrice)";
+                var addInvoiceItemsSql = @"INSERT INTO [InvoiceItems] (InvoiceId, ItemId, UnitPrice, Quantity, TotalPrice, ServicedBy, DiscountPercent, DiscountAmount)
+                                        VALUES (@InvoiceId, @ItemId, @UnitPrice, @Quantity, @TotalPrice, @ServicedBy, @DiscountPercent, @DiscountAmount)";
 
                 using (var connection = OpenConnection())
                 {

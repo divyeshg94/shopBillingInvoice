@@ -8,18 +8,31 @@ import { Item } from '../Model/Item';
   styleUrls: ['./item.component.css']
 })
 export class ItemComponent implements OnInit {
-  items: Item[];
+  items: Item[] = [];
+  item: Item;
 
   constructor(private itemsService: ItemService) { }
 
   ngOnInit() {
-    this.items = new Item[1]; 
+    this.getAllItems();
+    this.item = this.getNewItem();
   }
 
   getAllItems(){
     this.itemsService.getAllItems().then(allItems => {
       this.items = allItems;
     });
+  }
+
+  getNewItem(){
+    return {
+      SerialNumber: 0,
+      Id: 0, 
+      Name: '',
+      Category: '',
+      Price: 0,
+      IsAvailable: true
+    }
   }
 
   editItem(item){

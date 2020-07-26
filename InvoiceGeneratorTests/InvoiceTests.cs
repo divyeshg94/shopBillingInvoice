@@ -75,7 +75,7 @@ namespace InvoiceGeneratorTests
         {
             var invoice = Invoice.GetAllInvoices(new DateTime(2020, 01, 01), DateTime.UtcNow).Result;
             var invoiceService = new InvoiceService();
-            invoiceService.ConstructInvoicePdf(invoice.FirstOrDefault());
+            _ = invoiceService.ConstructInvoicePdf(invoice.LastOrDefault());
         }
     }
 }

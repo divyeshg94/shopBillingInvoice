@@ -49,6 +49,7 @@ namespace InvoiceAPI.Controllers
         }
 
         [HttpPost]
+        [Route("")]
         public async Task AddInvoice(InvoiceModel invoice)
         {
             var invoiceService = new InvoiceService();

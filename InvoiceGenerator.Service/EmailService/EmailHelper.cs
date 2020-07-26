@@ -9,23 +9,35 @@ namespace InvoiceGenerator.Service.EmailService
 {
     public class EmailHelper
     {
-        public string GenerateInvoice(InvoiceModel invoiceToGenerate)
+        public string GenerateMailBody(InvoiceModel invoiceToGenerate)
         {
             StringBuilder invoiceHtml = new StringBuilder();
             invoiceHtml.Append("<b>INVOICE : ").Append(invoiceToGenerate.Id.ToString()).Append("</b><br />");
             invoiceHtml.Append("<b>DATE : </b>").Append(DateTime.Now.ToShortDateString()).Append("<br />");
-            invoiceHtml.Append("<b>Invoice Amt :</b> $").Append(invoiceToGenerate.TotalAmount.ToString()).Append("<br />");
+            invoiceHtml.Append("<b>Invoice Amt :</b> ₹").Append(invoiceToGenerate.TotalAmount.ToString()).Append("<br />");
             invoiceHtml.Append("<br /><b>CUSTOMER CONTACT INFO:</b><br />");
             invoiceHtml.Append("<b>Name : </b>").Append(invoiceToGenerate.Customer.Name).Append("<br />");
             invoiceHtml.Append("<b>Phone : </b>").Append(invoiceToGenerate.Customer.PhoneNumber).Append("<br />");
             invoiceHtml.Append("<b>Email : </b>").Append(invoiceToGenerate.Customer.EmailId).Append("<br />");
-            invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>Qty</th><th>Product</th></tr>");
+            invoiceHtml.Append("<br /><b>PRODUCTS:</b><br /><table><tr><th>S.No</th><th>Product</th><th>Unit Price</th><th>Qty</th><th>Total</th></tr>");
             // InvoiceItem should be a collection property which contains list of invoice lines
             var serialNum = 1;
             foreach (var invoiceLine in invoiceToGenerate.InvoiceItemses)
             {
                 var item = Item.GetItem(invoiceLine.ItemId);
-                invoiceHtml.Append("<tr><td>").Append(invoiceLine.Quantity.ToString()).Append("</td><td>").Append(item.Name).Append("</td></tr>");
+                invoiceHtml
+                    .Append("<tr><td>")
+                    .Append(serialNum.ToString())
+                    .Append("</td><td>")
+                    .Append(item.Name)   
+                    .Append("</td><td>")
+                    .Append(invoiceLine.UnitPrice)
+                    .Append("</td><td>")
+                    .Append(invoiceLine.Quantity.ToString())
+                    .Append("</td><td>")
+                    .Append(invoiceLine.TotalPrice)
+                    .Append("</td></tr>");
+                serialNum++;
             }
             invoiceHtml.Append("</table>");
             return invoiceHtml.ToString();
@@ -36,7 +48,7 @@ namespace InvoiceGenerator.Service.EmailService
             invoiceToGenerate.Customer = Customer.GetCustomer(invoiceToGenerate.CustomerId);
             invoiceToGenerate.Employee = Employee.GetEmployee(invoiceToGenerate.EmployeeId);
 
-            var mailBody = GenerateInvoice(invoiceToGenerate);
+            var mailBody = GenerateMailBody(invoiceToGenerate);
 
             var emailSettingGroup = Settings.GetSettingByGroup(Constants.EmailSettings);
             var fromEmail = emailSettingGroup.FirstOrDefault(s => s.Key == Constants.FromEmailSettings).Value;

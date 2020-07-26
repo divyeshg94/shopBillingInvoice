@@ -1,4 +1,5 @@
 export class Item{
+    SerialNumber: number;
     Id: number;
     Name: string;
     Category: string;

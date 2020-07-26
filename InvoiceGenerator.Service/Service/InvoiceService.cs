@@ -19,15 +19,15 @@ namespace InvoiceGenerator.Service.Service
 
         public async Task AddInvoice(InvoiceModel invoice)
         {
-            await Invoice.AddInvoice(invoice);
+            var invoiceId = await Invoice.AddInvoice(invoice);
+            invoice.Id = invoiceId;
+            var invoicePath = ConstructInvoicePdf(invoice);
+
             var isSendEmailInvoice = Settings.GetSetting(Constants.IsInvoiceSendInEmailSetting).Value;
-
             bool.TryParse(isSendEmailInvoice, out var isSendMailForInvoice);
-
             if (isSendMailForInvoice)
             {
                 var emailHelper = new EmailHelper();
-                var invoicePath = ConstructInvoicePdf(invoice);
                 emailHelper.SendInvoiceMail(invoice, invoicePath);
             }
         }
@@ -44,8 +44,18 @@ namespace InvoiceGenerator.Service.Service
         {
             try
             {
+                Test(invoiceModel);
+                return "";
+
                 List<string> cssFiles = new List<string>();
-                var invoiceFilePath = $"D:\\Repo\\Personal\\shopBillingInvoice\\{invoiceModel.Id}.pdf";
+
+                var directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Invoices");
+                bool exists = System.IO.Directory.Exists(directory);
+
+                if (!exists)
+                    System.IO.Directory.CreateDirectory(directory);
+
+                var invoiceFilePath = directory + $"\\{invoiceModel.Id}-{invoiceModel.Customer.Name}.pdf";
 
                 cssFiles.Add(@"CustomerInvoiceTemplate.css");
 
@@ -72,6 +82,7 @@ namespace InvoiceGenerator.Service.Service
                 var p = new iTextSharp.tool.xml.parser.XMLParser(worker);
                 p.Parse(input);
                 document.Close();
+                fs.Close();
                 output.Position = 0;
                 return invoiceFilePath;
             }
@@ -81,16 +92,87 @@ namespace InvoiceGenerator.Service.Service
             }
         }
 
+        //https://stackoverflow.com/questions/25164257/how-to-convert-html-to-pdf-using-itextsharp/25164258
+        private void Test(InvoiceModel invoiceModel)
+        {
+            Byte[] bytes;
+
+            //Boilerplate iTextSharp setup here
+            //Create a stream that we can write to, in this case a MemoryStream
+            using (var ms = new MemoryStream())
+            {
+
+                //Create an iTextSharp Document which is an abstraction of a PDF but **NOT** a PDF
+                using (var doc = new Document())
+                {
+
+                    //Create a writer that's bound to our PDF abstraction and our stream
+                    using (var writer = PdfWriter.GetInstance(doc, ms))
+                    {
+
+                        //Open the document for writing
+                        doc.Open();
+
+                        //Our sample HTML and CSS
+                        Dictionary<string, string> replacements = GetReplacements(invoiceModel);
+                        var css = ReadMailTemplate("CustomerInvoiceTemplate.css");
+                        var body = GetMailBody("CustomerInvoiceTemplate.html", replacements);
+
+                        var example_html = body;
+                        var example_css = css;
+
+                        /**************************************************
+                         * Use the XMLWorker to parse HTML and CSS        *
+                         * ************************************************/
+                        using (var msCss = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(example_css)))
+                        {
+                            using (var msHtml = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(example_html)))
+                            {
+                                iTextSharp.tool.xml.XMLWorkerHelper.GetInstance().ParseXHtml(writer, doc, msHtml, msCss);
+                            }
+                        }
+                        doc.Close();
+                    }
+                }
+
+                //After all of the PDF "stuff" above is done and closed but **before** we
+                //close the MemoryStream, grab all of the active bytes from the stream
+                bytes = ms.ToArray();
+            }
+
+            //Now we just need to do something with those bytes.
+            //Here I'm writing them to disk but if you were in ASP.Net you might Response.BinaryWrite() them.
+            //You could also write the bytes to a database in a varbinary() column (but please don't) or you
+            //could pass them to another function for further PDF processing.
+            var testFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "test.pdf");
+            System.IO.File.WriteAllBytes(testFile, bytes);
+        }
+
         #region Private
         private static Dictionary<string, string> GetReplacements(InvoiceModel invoiceModel)
         {
+            var logoPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"Images\\Crescent-T.png");
+            
             var replacements = new Dictionary<string, string>();
             replacements.Add("InvoiceId", invoiceModel.Id.ToString());
             replacements.Add("Date", DateTime.UtcNow.ToString());
             replacements.Add("CustomerName", invoiceModel.Customer.Name);
             replacements.Add("CustomerEmailId", invoiceModel.Customer.EmailId);
             replacements.Add("CustomerPhone", invoiceModel.Customer.PhoneNumber);
+            replacements.Add("LogoPath", logoPath);
+            replacements.Add("InvoiceItems", GetEmailInvoiceItemstemplate(invoiceModel));
             return replacements;
+        }
+
+        private static string GetEmailInvoiceItemstemplate(InvoiceModel invoiceModel)
+        {
+            var itemsHtml = "<tr><th>S.No</th><th>Name</th><th>Unit Price</th><th>Quantity</th><th>Total Price</th></tr>";
+            var serialNum = 1;
+            foreach (var item in invoiceModel.InvoiceItemses)
+            {
+                itemsHtml += $"<tr><td>{serialNum}</td><td>{item.Item.Name}</td><td>Rs. {item.UnitPrice}</td><td>{item.Quantity}</td><td>Rs. {item.TotalPrice}</td></tr>";
+            }
+            return itemsHtml;
         }
 
         public static string GetMailBody(string bodyFileName, IDictionary replacements)

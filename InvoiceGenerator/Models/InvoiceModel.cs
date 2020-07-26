@@ -17,11 +17,21 @@ namespace InvoiceGenerator.Models
 
         public DateTime SaleDate { get; set; }
 
-        public double DiscountPercentage { get; set; }
+        public double DiscountPercent { get; set; }
         public double DiscountAmount { get; set; }
-        public double TaxPercentage { get; set; }
+        public double Tax { get; set; }
         public string Notes { get; set; }
 
+        public ModeOfPaymentEnum ModeOfPayment {get;set;}
+        public string ModeOfPaymentString {get;set;}
+
         public ICollection<InvoiceItems> InvoiceItemses { get; set; }
+    }
+
+    public enum ModeOfPaymentEnum
+    {
+        Cash = 0,
+        Card = 10,
+        UPI = 20
     }
 }

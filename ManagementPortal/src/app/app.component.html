@@ -12,6 +12,9 @@
           <a mat-list-item *ngFor="let item of menuItems" routerLink="{{item.MenuItemText}}" [routerLinkActive]="['active']">
             <mat-icon>{{item.MenuItemIcon}}</mat-icon>&nbsp; <span>{{item.MenuItemText}}</span>
           </a>
+          <a mat-list-item routerLink="dashboard" [routerLinkActive]="['active']">
+            <mat-icon></mat-icon>&nbsp; <span i18n>Dashboard</span>
+          </a>
           <a mat-list-item routerLink="invoice" [routerLinkActive]="['active']">
             <mat-icon></mat-icon>&nbsp; <span i18n>Invoice</span>
           </a>

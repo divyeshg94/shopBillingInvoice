@@ -68,8 +68,12 @@
     <Build Include="Settings.sql" />
     <Build Include="EmployeeAttendance.sql" />
     <Build Include="CustomerDetails.sql" />
+    <Build Include="Expenditure.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="InvoiceGenerator.SQL.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="InitialConfiguration.sql" />
   </ItemGroup>
 </Project>
