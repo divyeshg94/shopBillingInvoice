@@ -33,9 +33,9 @@ namespace InvoiceAPI.Controllers
 
         [HttpPost]
         [Route("")]
-        public async Task Add(CustomerModel customer)
+        public async Task<int> Add(CustomerModel customer)
         {
-            await Customer.AddCustomer(customer);
+            return await Customer.AddCustomer(customer);
         }
 
         [HttpPut]

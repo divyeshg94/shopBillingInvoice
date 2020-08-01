@@ -71,6 +71,8 @@
   <ItemGroup>
     <Compile Include="Models\CustomerDetails.cs" />
     <Compile Include="Models\EmployeeAttendanceModel.cs" />
+    <Compile Include="Models\ExpenditureItemsModel.cs" />
+    <Compile Include="Models\ExpenditureModel.cs" />
     <Compile Include="Models\SettingsModel.cs" />
     <Compile Include="Models\InvoiceItems.cs" />
     <Compile Include="Models\Stock.cs" />

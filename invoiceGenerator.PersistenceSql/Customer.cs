@@ -59,7 +59,23 @@ namespace invoiceGenerator.PersistenceSql
                 });
                 return customer;
             }
+        }
 
+        public static async Task<List<CustomerModel>> GetNewCustomers(DateTime fromDate, DateTime toDate)
+        {
+            var getCustomersSql = @"SELECT Id, Name, PhoneNumber, EmailId, RegisteredOn FROM [Customers] WHERE RegisteredOn Between @fromDate and @toDate";
+            try
+            {
+                using (var connection = OpenConnection())
+                {
+                    var customers = connection.Query<CustomerModel>(getCustomersSql, new { @fromDate = fromDate, @toDate = toDate}).ToList();
+                    return customers;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public static async Task<int> AddCustomer(CustomerModel customer)

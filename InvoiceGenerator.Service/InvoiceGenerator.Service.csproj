@@ -53,7 +53,9 @@
     <Compile Include="Service\CssFileRetriever.cs" />
     <Compile Include="Service\DashboardService.cs" />
     <Compile Include="Service\EmployeeAttendanceService.cs" />
+    <Compile Include="Service\ExpenditureService.cs" />
     <Compile Include="Service\InvoiceService.cs" />
+    <Compile Include="Service\SmsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\invoiceGenerator.PersistenceSql\invoiceGenerator.PersistenceSql.csproj">

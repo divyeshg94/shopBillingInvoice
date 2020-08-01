@@ -29,10 +29,10 @@ export class CustomerService {
     return await this.http.get<Customer[]>(url, httpOptions).toPromise();
   }
 
-  async addCustomer(customer : Customer) {
+  async addCustomer(customer : Customer): Promise<number> {
     var httpOptions = this.getHttpOptions();
     var url = baseUrl + this.controller;
-    return await this.http.post(url, customer, httpOptions).toPromise();
+    return await this.http.post<number>(url, customer, httpOptions).toPromise();
   }
 
   async updateCustomer(customer : Customer) {

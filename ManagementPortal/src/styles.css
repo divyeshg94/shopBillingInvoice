@@ -269,3 +269,21 @@ mat-table {
 .table{
     color: #ffffff !important;
 }
+
+.theme-pink{
+    background-color: #E91E63 !important;
+    color: white !important;
+}
+
+.row{
+    padding:5px 5px 5px 5px;
+}
+
+label{
+    padding-top: 8px;
+    text-align: center;
+}
+
+mat-grid-tile {
+    background: #FF6275;
+}

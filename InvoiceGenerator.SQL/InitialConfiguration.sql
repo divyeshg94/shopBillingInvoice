@@ -27,7 +27,14 @@ WHERE not exists (select * from Settings where [Key] = 'InvoiceSubject')
 Insert into Settings With (ROWLOCK) SELECT 'IsInvoiceSendInEmail', 'True', 'InvoiceSettings', GETUTCDATE(), GETUTCDATE()
 WHERE not exists (select * from Settings where [Key] = 'IsInvoiceSendInEmail')
 
+Insert into Settings With (ROWLOCK) SELECT 'IsInvoiceSendInSms', 'True', 'SmsSettings', GETUTCDATE(), GETUTCDATE()
+WHERE not exists (select * from Settings where [Key] = 'IsInvoiceSendInSms')
 
+Insert into Settings With (ROWLOCK) SELECT 'TwilioAccountSid', 'AC3b7064289030bbf51fd8733b01e9fbda', 'SmsSettings', GETUTCDATE(), GETUTCDATE()
+WHERE not exists (select * from Settings where [Key] = 'TwilioAccountSid')
+
+Insert into Settings With (ROWLOCK) SELECT 'TwilioAuthToken', 'c2bddfd631911af796043bc9d0653fdb', 'SmsSettings', GETUTCDATE(), GETUTCDATE()
+WHERE not exists (select * from Settings where [Key] = 'TwilioAuthToken')
 
 --Items Table
 
@@ -153,7 +160,6 @@ INSERT INTO Items  With (ROWLOCK) SELECT 'Dandruff Clear', 'Hair SPA', '', 10, 0
 WHERE not exists (select * from Items where [Name] = 'Dandruff Clear' and [Category] = 'Hair SPA' and [Type] = 10)
 
 --Hair Cuts
-
 INSERT INTO Items  With (ROWLOCK) SELECT 'Straight Cut', 'Hair Cuts', '', 10, 0, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Straight Cut' and [Category] = 'Hair Cuts' and [Type] = 10)
 
@@ -173,7 +179,6 @@ INSERT INTO Items  With (ROWLOCK) SELECT 'Kids Cut', 'Hair Cuts', '', 10, 0, 1, 
 WHERE not exists (select * from Items where [Name] = 'Kids Cut' and [Category] = 'Hair Cuts' and [Type] = 10)
 
 --Hair Styling
-
 INSERT INTO Items  With (ROWLOCK) SELECT 'Blow dry Straight', 'Hair Styling', '', 10, 0, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Blow dry Straight' and [Category] = 'Hair Styling' and [Type] = 10)
 
@@ -190,7 +195,6 @@ INSERT INTO Items  With (ROWLOCK) SELECT 'Crimping', 'Hair Styling', '', 10, 0, 
 WHERE not exists (select * from Items where [Name] = 'Crimping' and [Category] = 'Hair Styling' and [Type] = 10)
 
 --MakeOvers
-
 INSERT INTO Items  With (ROWLOCK) SELECT 'Classic', 'Make overs', '', 10, 0, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Classic' and [Category] = 'Make overs' and [Type] = 10)
 

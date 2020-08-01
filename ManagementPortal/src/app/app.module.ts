@@ -16,6 +16,7 @@ import { AddCustomerDialog } from './customer/AddCustomerDialog';
 import { ItemComponent } from './item/item.component';
 import { EmployeeattendanceComponent } from './employeeattendance/employeeattendance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     ReactiveFormsModule,
     AngMaterialModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot()
   ],
   entryComponents:[AddEmployeeDialog, AddCustomerDialog],
   providers: [],

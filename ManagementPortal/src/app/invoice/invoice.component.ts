@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerService } from '../customer/customer.service';
 import { Customer } from '../Model/Customer';
@@ -10,6 +10,7 @@ import { Item } from '../Model/Item';
 import { InvoiceService } from './invoice.service';
 import { InvoiceItems } from '../Model/InvoiceItems';
 import { forEach } from '@angular/router/src/utils/collection';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-invoice',
   templateUrl: './invoice.component.html',
@@ -27,7 +28,8 @@ export class InvoiceComponent implements OnInit {
   constructor(private customerService: CustomerService,
               private employeeService: EmployeeService,
               private itemService: ItemService,
-              private invoiceService: InvoiceService ) { }
+              private invoiceService: InvoiceService,
+              private toastr: ToastrService ) { }
 
   ngOnInit() {
     this.invoiceModel.Customer = new Customer;
@@ -73,9 +75,13 @@ export class InvoiceComponent implements OnInit {
   }
 
   searchByPhoneNumber(phoneNumber){
-    let customers = this.customerService.getCustomer(null,phoneNumber).then(customers => {
-      this.invoiceModel.Customer = customers;
-      this.invoiceModel.CustomerId = customers.Id;
+    let customers = this.customerService.getCustomer(null,phoneNumber).then(customer => {
+      if(customer != null){
+        this.invoiceModel.Customer = customer;
+        this.invoiceModel.CustomerId = customer.Id;
+      }else{
+        document.getElementById("openCustomerModalButton").click();
+      }
     });
   }
 
@@ -132,6 +138,11 @@ export class InvoiceComponent implements OnInit {
   }
 
   generateInvoice(){
+    if(!this.invoiceModel.Customer || !this.invoiceModel.CustomerId || this.invoiceModel.CustomerId<= 0){
+      this.toastr.error('Customer not found!!!', 'Failure!');
+      return;
+    }
+
     this.invoiceModel.InvoiceItemses = this.items;
     this.getInvoiceTotalPrice();
     this.invoiceModel.DiscountAmount = 0;
@@ -140,7 +151,23 @@ export class InvoiceComponent implements OnInit {
     this.invoiceService.addInvoice(this.invoiceModel).then();
   }
 
-  clearInvoice(){
+  addNewCustomer(){
+    let customer = new Customer();
+    customer.Name = this.invoiceModel.Customer.Name;
+    customer.PhoneNumber = this.invoiceModel.Customer.PhoneNumber;
+    customer.EmailId = this.invoiceModel.Customer.EmailId;
+    customer.RegisteredOn = new Date;
+    this.customerService.addCustomer(customer).then(customerId => {
+      this.invoiceModel.Customer = customer;
+      this.invoiceModel.CustomerId = customerId;
+      document.getElementById("customerCloseBtn").click();
+    });
+  }
 
+  clearInvoice(){
+    this.invoiceModel = new Invoice;
+    this.invoiceModel.Customer = new Customer;
+    this.invoiceModel.Employee = new Employee;
+    this.invoiceModel.SaleDate = new Date;
   }
 }
