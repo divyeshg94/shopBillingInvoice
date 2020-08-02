@@ -45,7 +45,11 @@ namespace InvoiceGenerator.Service.EmailService
 
         public void SendInvoiceMail(InvoiceModel invoiceToGenerate, string invoicePath)
         {
-            invoiceToGenerate.Customer = Customer.GetCustomer(invoiceToGenerate.CustomerId);
+            if(invoiceToGenerate.Customer == null)
+            {
+                invoiceToGenerate.Customer = Customer.GetCustomer(invoiceToGenerate.CustomerId);
+            }
+
             invoiceToGenerate.Employee = Employee.GetEmployee(invoiceToGenerate.EmployeeId);
 
             var mailBody = GenerateMailBody(invoiceToGenerate);

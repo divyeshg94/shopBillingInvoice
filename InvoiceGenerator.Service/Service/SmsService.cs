@@ -1,4 +1,8 @@
-﻿using InvoiceGenerator.Models;
+﻿using System.Net;
+using invoiceGenerator.PersistenceSql;
+using InvoiceGenerator.Models;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
 
 namespace InvoiceGenerator.Service.Service
 {
@@ -6,16 +10,33 @@ namespace InvoiceGenerator.Service.Service
     {
         public void SendInvoiceSms(InvoiceModel invoiceToGenerate)
         {
-            //const string accountSid = "AC3b7064289030bbf51fd8733b01e9fbda";
-            //const string authToken = "c2bddfd631911af796043bc9d0653fdb";
+            var twilioAccountSid = Settings.GetSetting(Constants.TwilioAccountSid).Value;
+            var twilioAuthToken = Settings.GetSetting(Constants.TwilioAuthToken).Value;
+            var twilioPhoneNumber = Settings.GetSetting(Constants.TwilioPhoneNumber).Value;
 
-            //TwilioClient.Init(accountSid, authToken);
+            TwilioClient.Init(twilioAccountSid, twilioAuthToken);
 
-            //var message = MessageResource.Create(
-            //    body: "This is the ship that made the Kessel Run in fourteen parsecs?",
-            //    from: new Twilio.Types.PhoneNumber("+15017122661"),
-            //    to: new Twilio.Types.PhoneNumber("+15558675310")
-            //);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            var body = ConstructInvoiceSmsMessage(invoiceToGenerate);
+            var message = MessageResource.Create(
+                body: body,
+                from: new Twilio.Types.PhoneNumber(twilioPhoneNumber),
+                //to: new Twilio.Types.PhoneNumber("+91" + invoiceToGenerate.Customer.PhoneNumber)
+                to: new Twilio.Types.PhoneNumber("+919487867505")
+            );
+        }
+
+        private string ConstructInvoiceSmsMessage(InvoiceModel invoiceToGenerate)
+        {
+            var message = "Thank you for visiting us!!!\n";
+            message += "Please find your invoice\n\n";
+
+            message += $"Total Amount - {invoiceToGenerate.TotalAmount},\n\n";
+
+            message += "With Love,\n";
+            message += "Crescent Beauty Lounge";
+            return message;
         }
     }
 }

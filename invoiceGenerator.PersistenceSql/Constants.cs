@@ -13,5 +13,11 @@
         public const string InvoiceSubjectSettings = "InvoiceSubject";
         public const string IsInvoiceSendInEmailSetting = "IsInvoiceSendInEmail";
 
+        //SmsSettings
+        public const string SmsSettings = "SmsSettings";
+        public const string IsInvoiceSendInSms = "IsInvoiceSendInSms";
+        public const string TwilioAccountSid = "TwilioAccountSid";
+        public const string TwilioAuthToken = "TwilioAuthToken";
+        public const string TwilioPhoneNumber = "TwilioPhoneNumber";
     }
 }

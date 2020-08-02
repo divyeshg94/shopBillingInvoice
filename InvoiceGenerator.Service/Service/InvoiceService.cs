@@ -31,10 +31,19 @@ namespace InvoiceGenerator.Service.Service
 
             var isSendEmailInvoice = Settings.GetSetting(Constants.IsInvoiceSendInEmailSetting).Value;
             bool.TryParse(isSendEmailInvoice, out var isSendMailForInvoice);
-            if (isSendMailForInvoice)
+
+            var isSendSmsInvoice = Settings.GetSetting(Constants.IsInvoiceSendInSms).Value;
+            bool.TryParse(isSendSmsInvoice, out var isSendSmsForInvoice);
+
+            invoice.Customer = Customer.GetCustomer(invoice.CustomerId);
+            if (isSendMailForInvoice && !string.IsNullOrEmpty(invoice.Customer?.EmailId))
             {
                 var emailHelper = new EmailHelper();
                 emailHelper.SendInvoiceMail(invoice, invoicePath);
+            } else if (isSendSmsForInvoice && !string.IsNullOrEmpty(invoice.Customer?.PhoneNumber))
+            {
+                var smsService = new SmsService();
+                smsService.SendInvoiceSms(invoice);
             }
         }
 

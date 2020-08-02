@@ -33,8 +33,11 @@ WHERE not exists (select * from Settings where [Key] = 'IsInvoiceSendInSms')
 Insert into Settings With (ROWLOCK) SELECT 'TwilioAccountSid', 'AC3b7064289030bbf51fd8733b01e9fbda', 'SmsSettings', GETUTCDATE(), GETUTCDATE()
 WHERE not exists (select * from Settings where [Key] = 'TwilioAccountSid')
 
-Insert into Settings With (ROWLOCK) SELECT 'TwilioAuthToken', 'c2bddfd631911af796043bc9d0653fdb', 'SmsSettings', GETUTCDATE(), GETUTCDATE()
+Insert into Settings With (ROWLOCK) SELECT 'TwilioAuthToken', '5ee6b6aa25608932d8e566c59a71b56d', 'SmsSettings', GETUTCDATE(), GETUTCDATE()
 WHERE not exists (select * from Settings where [Key] = 'TwilioAuthToken')
+
+Insert into Settings With (ROWLOCK) SELECT 'TwilioPhoneNumber', '+14142929962', 'SmsSettings', GETUTCDATE(), GETUTCDATE()
+WHERE not exists (select * from Settings where [Key] = 'TwilioPhoneNumber')
 
 --Items Table
 

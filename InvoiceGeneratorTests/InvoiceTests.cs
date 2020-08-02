@@ -77,5 +77,13 @@ namespace InvoiceGeneratorTests
             var invoiceService = new InvoiceService();
             _ = invoiceService.ConstructInvoicePdf(invoice.LastOrDefault());
         }
+
+        [TestMethod]
+        public void SendSms()
+        {
+            var invoice = Invoice.GetAllInvoices(new DateTime(2020, 01, 01), DateTime.UtcNow).Result;
+            var smsService = new SmsService();
+            smsService.SendInvoiceSms(invoice.LastOrDefault());
+        }
     }
 }
