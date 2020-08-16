@@ -22,7 +22,8 @@
               "src/favicon.ico",
               "src/assets",
               "src/Crescent.png",
-              "src/Crescent-Dark.png"
+              "src/Crescent-Dark.png",
+              "src/assets/images/"
             ],
             "styles": [
               "node_modules/font-awesome/css/font-awesome.min.css",

@@ -7,6 +7,7 @@
     border: 0.5px solid gray;
     width: 800px;
     border-radius: 10px;
+    margin-bottom: 100px;
 }
 
 .addItemForm .row{

@@ -5,7 +5,16 @@
 </div>
 <br/>
 
-<div class="col-lg-12">
+<div class="col-lg-12 row">
+  <div  *ngFor="let category of catalogItems;let i = index;">
+  <div class="container col-lg-12">
+    <img [src]="category.ImgSrc" alt="Avatar" class="image col-lg-12">
+    <div class="overlay col-lg-6">
+      <div class="text">{{category.CategoryName}}</div>
+    </div>
+  </div>
+</div>
+<!-- 
   <mat-grid-list cols="3" rowHeight="2:1">
     <div  *ngFor="let item of items;let i = index;">
       <mat-grid-tile class="item-tile">
@@ -17,7 +26,7 @@
         <div class='fa fa-pencil p-1' (click)="editItem(item)"></div>
       </mat-grid-tile>
     </div>
-  </mat-grid-list>
+  </mat-grid-list> -->
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

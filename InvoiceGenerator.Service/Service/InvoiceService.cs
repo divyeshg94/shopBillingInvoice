@@ -148,7 +148,8 @@ namespace InvoiceGenerator.Service.Service
             var serialNum = 1;
             foreach (var item in invoiceModel.InvoiceItemses)
             {
-                itemsHtml += $"<tr><td>{serialNum}</td><td>{item.Item.Name}</td><td>Rs. {item.UnitPrice}</td><td>{item.Quantity}</td><td>Rs. {item.TotalPrice}</td></tr>";
+                var itemData = Item.GetItem(item.ItemId);
+                itemsHtml += $"<tr><td>{serialNum}</td><td>{itemData.Name}</td><td>Rs. {item.UnitPrice}</td><td>{item.Quantity}</td><td>Rs. {item.TotalPrice}</td></tr>";
             }
             return itemsHtml;
         }

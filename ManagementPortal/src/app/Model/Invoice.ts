@@ -15,4 +15,5 @@ export class Invoice{
     TaxPercentage: number;
     Notes: string;
     InvoiceItemses: InvoiceItems[];
+    CashProvided: number;
 }

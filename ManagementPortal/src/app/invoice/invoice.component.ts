@@ -148,7 +148,14 @@ export class InvoiceComponent implements OnInit {
     this.invoiceModel.DiscountAmount = 0;
     this.invoiceModel.DiscountPercent = 0;
     this.invoiceModel.TaxPercentage = 0;
-    this.invoiceService.addInvoice(this.invoiceModel).then();
+    this.invoiceService.addInvoice(this.invoiceModel).then(
+      function (){
+        this.toastr.success("Invoice Added Successfully!!");
+      },
+      function (){
+        this.toastr.error("Error in adding invoice");
+      }
+    );
   }
 
   addNewCustomer(){
@@ -169,5 +176,7 @@ export class InvoiceComponent implements OnInit {
     this.invoiceModel.Customer = new Customer;
     this.invoiceModel.Employee = new Employee;
     this.invoiceModel.SaleDate = new Date;
+    this.items = [];
+    this.toastr.info("Discarded the invoice!!");
   }
 }
