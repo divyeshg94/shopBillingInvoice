@@ -36,6 +36,30 @@ namespace invoiceGenerator.PersistenceSql
             }
         }
 
+        public static async Task<List<ExpenditureModel>> GetAllExpenditure(int skip, int take)
+        {
+            try
+            {
+                var getInvoicesSql = @"SELECT * FROM [Expenditure] i order by Id desc";
+                var expenditures = new List<ExpenditureModel>();
+
+                using (var connection = OpenConnection())
+                {
+                    var allExpenditure = connection.Query<ExpenditureModel>(getInvoicesSql).ToList();
+                    foreach (var exp in allExpenditure)
+                    {
+                        var i = await GetExpenditureElements(connection, exp);
+                        expenditures.Add(i);
+                    }
+                    return expenditures;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public static async Task<ExpenditureModel> GetExpenditure(int expenditureId)
         {
             try

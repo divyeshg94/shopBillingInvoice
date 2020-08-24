@@ -1,0 +1,25 @@
+<table datatable [dtOptions]="dtOptions" class="row-border hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Bill Date</th>
+      <th>Type</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="expenditure?.length != 0">
+      <tr *ngFor="let exp of expenditure">
+          <td>{{ exp.Id }}</td>
+          <td>{{ exp.Name }}</td>
+          <td>{{ exp.BillDate }}</td>
+          <td>{{ exp.Type }}</td>
+          <td>{{ exp.Amount }}</td>
+      </tr>
+  </tbody>
+  <tbody *ngIf="exp?.length == 0">
+    <tr>
+      <td colspan="3" class="no-data-available">No data!</td>
+    </tr>
+  <tbody>
+</table>

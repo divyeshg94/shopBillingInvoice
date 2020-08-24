@@ -17,6 +17,8 @@ import { ItemComponent } from './item/item.component';
 import { EmployeeattendanceComponent } from './employeeattendance/employeeattendance.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
+import { ExpenditureComponent } from './expenditure/expenditure.component';
+import { DataTablesModule } from 'angular-datatables';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { ToastrModule } from 'ngx-toastr';
     AddCustomerDialog,
     ItemComponent,
     EmployeeattendanceComponent,
-    DashboardComponent
+    DashboardComponent,
+    ExpenditureComponent
   ],
   imports: [
     RouterModule,
@@ -40,7 +43,8 @@ import { ToastrModule } from 'ngx-toastr';
     AngMaterialModule,
     HttpClientModule,
     FormsModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    DataTablesModule
   ],
   entryComponents:[AddEmployeeDialog, AddCustomerDialog],
   providers: [],

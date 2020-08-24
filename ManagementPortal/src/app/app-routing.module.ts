@@ -6,13 +6,15 @@ import { EmployeeComponent } from './employee/employee.component';
 import { CustomerComponent } from './customer/customer.component';
 import { ItemComponent } from './item/item.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ExpenditureComponent } from './expenditure/expenditure.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent }, 
   { path: 'invoice', component: InvoiceComponent },
   { path: 'employee', component: EmployeeComponent },  
   { path: 'customer', component: CustomerComponent },
-  { path: 'item', component: ItemComponent}
+  { path: 'item', component: ItemComponent},
+  { path: 'expenditure', component: ExpenditureComponent}
 ];
 
 @NgModule({
