@@ -27,7 +27,7 @@ namespace InvoiceAPI.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
+        [Route("{employeeId}")]
         public async Task<List<EmployeeAttendanceModel>> EmployeeAllAttendance(int employeeId)
         {
             return EmployeeAttendance.GetEmployeeAttendance(employeeId);

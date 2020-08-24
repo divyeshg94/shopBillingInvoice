@@ -4,6 +4,8 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Employee } from '../Model/Employee';
 import { AddEmployeeDialog } from './AddEmployeeDialog';
 import { FormControl } from '@angular/forms';
+import { EmployeeAttendanceService } from './employeeAttendance.service';
+import { ToastrService } from 'ngx-toastr';
 
 export interface DialogData {
   phoneNumber: string;
@@ -23,6 +25,8 @@ export class EmployeeComponent implements OnInit {
   name: string;
   
   constructor(private employeeService: EmployeeService,
+              private attendanceService: EmployeeAttendanceService,
+              private toastr: ToastrService,
               public dialog: MatDialog) { }
 
   ngOnInit() {
@@ -61,6 +65,18 @@ export class EmployeeComponent implements OnInit {
       this.employeeService.updateEmployee(result).then(employees => {
         this.getAllEmployees();
       });
+    });
+  }
+
+  checkInEmployee(employee: Employee){
+    this.attendanceService.checkIn(employee.Id).then(employees => {
+      this.toastr.success("Employee Check-in success!!");
+    });
+  }
+
+  checkOutEmployee(employee: Employee){
+    this.attendanceService.checkOut(employee.Id).then(employees => {
+      this.toastr.success("Employee Check-out success!!");
     });
   }
 }

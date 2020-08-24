@@ -70,6 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\CustomerDetails.cs" />
+    <Compile Include="Models\DataTableQuery.cs" />
+    <Compile Include="Models\DataTableResponse.cs" />
     <Compile Include="Models\EmployeeAttendanceModel.cs" />
     <Compile Include="Models\ExpenditureItemsModel.cs" />
     <Compile Include="Models\ExpenditureModel.cs" />

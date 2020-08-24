@@ -42,32 +42,32 @@ WHERE not exists (select * from Settings where [Key] = 'TwilioPhoneNumber')
 --Items Table
 
 --Threading
-INSERT INTO Items  With (ROWLOCK) SELECT 'Eyebrows', 'Threading', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Eyebrows', 'Threading', '', 10, 40, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Eyebrows' and [Category] = 'Threading' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'UpperLips', 'Threading', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'UpperLips', 'Threading', '', 10, 20, 1, 1
 WHERE not exists (select * from Items where [Name] = 'UpperLips' and [Category] = 'Threading' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Chin', 'Threading', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Chin', 'Threading', '', 10, 80, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Chin' and [Category] = 'Threading' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Forehead', 'Threading', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Forehead', 'Threading', '', 10, 20, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Forehead' and [Category] = 'Threading' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Full Face', 'Threading', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Full Face', 'Threading', '', 10, 120, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Full Face' and [Category] = 'Threading' and [Type] = 10)
 
 --Wax
-INSERT INTO Items  With (ROWLOCK) SELECT 'Half Arms', 'Wax', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Half Arms', 'Wax', '', 10, 200, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Half Arms' and [Category] = 'Wax' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Full Arms', 'Wax', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Full Arms', 'Wax', '', 10, 300, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Full Arms' and [Category] = 'Wax' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Half legs', 'Wax', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Half legs', 'Wax', '', 10, 200, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Half legs' and [Category] = 'Wax' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Full legs', 'Wax', '', 10, 0, 1, 1
+INSERT INTO Items  With (ROWLOCK) SELECT 'Full legs', 'Wax', '', 10, 300, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Full legs' and [Category] = 'Wax' and [Type] = 10)
 
 INSERT INTO Items  With (ROWLOCK) SELECT 'Front', 'Wax', '', 10, 0, 1, 1
@@ -80,17 +80,30 @@ INSERT INTO Items  With (ROWLOCK) SELECT 'Full body', 'Wax', '', 10, 0, 1, 1
 WHERE not exists (select * from Items where [Name] = 'Full body' and [Category] = 'Wax' and [Type] = 10)
 
 --Pedicure & Manicure
-INSERT INTO Items  With (ROWLOCK) SELECT 'Nail Makeover', 'Pedicure & Manicure', '', 10, 0, 1, 1
-WHERE not exists (select * from Items where [Name] = 'Nail Makeover' and [Category] = 'Pedicure & Manicure' and [Type] = 10)
+INSERT INTO Items  With (ROWLOCK) SELECT 'Nail Makeover', 'Pedicure', '', 10, 200, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Nail Makeover' and [Category] = 'Pedicure' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Classic', 'Pedicure & Manicure', '', 10, 0, 1, 1
-WHERE not exists (select * from Items where [Name] = 'Classic' and [Category] = 'Pedicure & Manicure' and [Type] = 10)
+INSERT INTO Items  With (ROWLOCK) SELECT 'Classic', 'Pedicure', '', 10, 300, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Classic' and [Category] = 'Pedicure' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Crystal', 'Pedicure & Manicure', '', 10, 0, 1, 1
-WHERE not exists (select * from Items where [Name] = 'Crystal' and [Category] = 'Pedicure & Manicure' and [Type] = 10)
+INSERT INTO Items  With (ROWLOCK) SELECT 'Crystal', 'Pedicure', '', 10, 600, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Crystal' and [Category] = 'Pedicure' and [Type] = 10)
 
-INSERT INTO Items  With (ROWLOCK) SELECT 'Ice Cream', 'Pedicure & Manicure', '', 10, 0, 1, 1
-WHERE not exists (select * from Items where [Name] = 'Ice Cream' and [Category] = 'Pedicure & Manicure' and [Type] = 10)
+INSERT INTO Items  With (ROWLOCK) SELECT 'Ice Cream', 'Pedicure', '', 10, 1000, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Ice Cream' and [Category] = 'Pedicure' and [Type] = 10)
+
+
+INSERT INTO Items  With (ROWLOCK) SELECT 'Nail Makeover', 'Manicure', '', 10, 200, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Nail Makeover' and [Category] = 'Manicure' and [Type] = 10)
+
+INSERT INTO Items  With (ROWLOCK) SELECT 'Classic', 'Manicure', '', 10, 400, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Classic' and [Category] = 'Manicure' and [Type] = 10)
+
+INSERT INTO Items  With (ROWLOCK) SELECT 'Crystal', 'Manicure', '', 10, 800, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Crystal' and [Category] = 'Manicure' and [Type] = 10)
+
+INSERT INTO Items  With (ROWLOCK) SELECT 'Ice Cream', 'Manicure', '', 10, 1200, 1, 1
+WHERE not exists (select * from Items where [Name] = 'Ice Cream' and [Category] = 'Manicure' and [Type] = 10)
 
 --Bleach
 INSERT INTO Items  With (ROWLOCK) SELECT 'Lacto Bleach', 'Bleach', '', 10, 0, 1, 1

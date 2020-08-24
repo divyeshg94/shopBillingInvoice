@@ -287,3 +287,21 @@ label{
 mat-grid-tile {
     background: #FF6275;
 }
+
+.action-pink{
+    background-color: #e8d5de !important;
+    color: black !important;
+}
+
+.mat-table{
+    background-color: #303030;
+    color:#fff !important;
+}
+
+.mat-cell {
+    color: white !important;
+}
+
+.mat-header-cell{
+    color: white !important;
+}

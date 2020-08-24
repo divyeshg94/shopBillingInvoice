@@ -1,6 +1,6 @@
 <section>
   <div class="example-button-row">
-    <button mat-flat-button color="primary" (click)="openAddDialog()">+ &nbsp; Create Employee</button>
+    <button mat-flat-button class="theme-pink" (click)="openAddDialog()">+ &nbsp; Create Employee</button>
   </div>
 </section>
 <br/>
@@ -41,7 +41,9 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">
-         <button mat-raised-button color="accent" (click)="openEditDialog(element)">Edit</button> 
+      <button mat-raised-button class="action-pink" (click)="openEditDialog(element)">Edit</button> 
+      <button mat-raised-button class="action-pink" (click)="checkInEmployee(element)">Check In</button> 
+      <button mat-raised-button class="action-pink" (click)="checkOutEmployee(element)">Check Out</button> 
     </td>
   </ng-container> 
 
