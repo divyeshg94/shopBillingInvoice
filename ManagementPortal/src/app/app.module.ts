@@ -19,6 +19,14 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ExpenditureComponent } from './expenditure/expenditure.component';
 import { DataTablesModule } from 'angular-datatables';
+import { InvoicehistoryComponent } from './invoicehistory/invoicehistory.component';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { InventoryComponent } from './inventory/inventory.component';
+// import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
+
+// const ngWizardConfig: NgWizardConfig = {
+//   theme: THEME.default
+// };
 
 @NgModule({
   declarations: [
@@ -31,7 +39,9 @@ import { DataTablesModule } from 'angular-datatables';
     ItemComponent,
     EmployeeattendanceComponent,
     DashboardComponent,
-    ExpenditureComponent
+    ExpenditureComponent,
+    InvoicehistoryComponent,
+    InventoryComponent
   ],
   imports: [
     RouterModule,
@@ -44,10 +54,13 @@ import { DataTablesModule } from 'angular-datatables';
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot(),
-    DataTablesModule
+    DataTablesModule,
+    // NgWizardModule.forRoot(ngWizardConfig)
   ],
   entryComponents:[AddEmployeeDialog, AddCustomerDialog],
-  providers: [],
+  providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

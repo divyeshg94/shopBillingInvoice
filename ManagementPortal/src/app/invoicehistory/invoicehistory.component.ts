@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { Expenditure } from '../Model/Expenditure';
+import { Invoice } from '../Model/Invoice';
 import { HttpClient } from '@angular/common/http';
-import { DataTablesResponse } from '../Model/DataTableResponse';
 import { environment } from 'src/environments/environment';
+import { DataTablesResponse } from '../Model/DataTableResponse';
 
 @Component({
-  selector: 'app-expenditure',
-  templateUrl: './expenditure.component.html',
-  styleUrls: ['./expenditure.component.css']
+  selector: 'app-invoicehistory',
+  templateUrl: './invoicehistory.component.html',
+  styleUrls: ['./invoicehistory.component.css']
 })
-export class ExpenditureComponent implements OnInit {
+export class InvoicehistoryComponent implements OnInit {
 
   dtOptions: DataTables.Settings = {};
-  expenditure: Expenditure[];
+  invoices: Invoice[];
 
   constructor(private http: HttpClient) { }
 
@@ -26,10 +26,10 @@ export class ExpenditureComponent implements OnInit {
       processing: true,
       ajax: (dataTablesParameters: any, callback) => {
         that.http
-          .post<DataTablesResponse>(environment.apiBaseUrl + "/expenditure",
+          .post<DataTablesResponse>(environment.apiBaseUrl + "/invoice",
             dataTablesParameters
           ).subscribe(resp => {
-            that.expenditure = resp.data;
+            that.invoices = resp.data;
 
             callback({
               recordsTotal: resp.recordsTotal,

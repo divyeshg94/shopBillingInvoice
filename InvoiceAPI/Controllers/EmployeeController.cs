@@ -34,18 +34,21 @@ namespace InvoiceAPI.Controllers
         }
 
         [HttpPost]
+        [Route("")]
         public async Task AddEmployee(EmployeeModel employee)
         {
             await Employee.AddEmployee(employee);
         }
 
         [HttpPut]
+        [Route("")]
         public void UpdateEmployee(EmployeeModel employee)
         {
             Employee.UpdateEmployee(employee);
         }
 
         [HttpDelete]
+        [Route("")]
         public void DeleteEmployee(int employeeId)
         {
             Employee.DeleteEmployee(employeeId);

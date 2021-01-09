@@ -7,6 +7,8 @@ import { CustomerComponent } from './customer/customer.component';
 import { ItemComponent } from './item/item.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ExpenditureComponent } from './expenditure/expenditure.component';
+import { InvoicehistoryComponent } from './invoicehistory/invoicehistory.component';
+import { InventoryComponent } from './inventory/inventory.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard', component: DashboardComponent }, 
@@ -14,6 +16,8 @@ const appRoutes: Routes = [
   { path: 'employee', component: EmployeeComponent },  
   { path: 'customer', component: CustomerComponent },
   { path: 'item', component: ItemComponent},
+  { path: 'inventory', component: InventoryComponent},
+  { path: 'history', component: InvoicehistoryComponent},
   { path: 'expenditure', component: ExpenditureComponent}
 ];
 

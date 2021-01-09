@@ -12,7 +12,7 @@ namespace InvoiceAPI.Controllers
     [RoutePrefix("expenditure")]
     public class ExpenditureController : ApiController
     {
-        [HttpGet]
+        [HttpPost]
         [Route("byDate")]
         public async Task<List<ExpenditureModel>> GetAllExpenditure(DateTime fromDate, DateTime toDate)
         {
@@ -20,7 +20,7 @@ namespace InvoiceAPI.Controllers
             return expenditures;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("")]
         public async Task<DataTableResponse<ExpenditureModel>> GetExpenditure(DataTableQuery query)
         {
@@ -34,13 +34,6 @@ namespace InvoiceAPI.Controllers
         //{
         //    return Employee.GetEmployee(employeeId);
         //}
-
-        [HttpPost]
-        public async Task<int> AddEmployee(ExpenditureModel expenditure)
-        {
-            return await Expenditure.AddExpenditure(expenditure);
-        }
-
         //[HttpDelete]
         //public void DeleteEmployee(int employeeId)
         //{

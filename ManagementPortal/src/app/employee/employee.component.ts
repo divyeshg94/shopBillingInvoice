@@ -18,8 +18,8 @@ export interface DialogData {
   styleUrls: ['./employee.component.css']
 })
 export class EmployeeComponent implements OnInit {
-  totalColumns: string[] = ['Id', 'Name', 'PhoneNumber', 'JoinedOn', 'ReleavedOn', 'IsExists', 'actions'];
-  displayedColumns = ['Id', 'Name', 'PhoneNumber', 'JoinedOn', 'ReleavedOn', 'IsExists', 'actions'];
+  totalColumns: string[] = ['Id', 'Name', 'PhoneNumber', 'EmailId', 'JoinedOn', 'IsExists', 'actions'];
+  displayedColumns = ['Id', 'Name', 'PhoneNumber', 'EmailId', 'JoinedOn', 'IsExists', 'actions'];
   dataSource = new MatTableDataSource<Employee>();
   phoneNumber: string;
   name: string;

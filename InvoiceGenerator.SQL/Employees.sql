@@ -8,8 +8,8 @@
     [JoinedOn] DATETIME NULL, 
     [ReleavedOn] DATETIME NULL, 
     [IsExists] BIT NOT NULL DEFAULT 1, 
-    [Photo] VARBINARY(MAX) NULL, 
-    [AadharImage] VARBINARY(MAX) NULL, 
+    [Photo] NVARCHAR(MAX) NULL, 
+    [AadharImage] NVARCHAR(MAX) NULL, 
     [Address] VARCHAR(MAX) NULL, 
     [EmailId] VARCHAR(150) NULL 
 )

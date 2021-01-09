@@ -9,8 +9,8 @@
 <mat-table #table [dataSource]="dataSource">
   <!-- Position Column -->
   <ng-container matColumnDef="Id">
-    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> No. </th>
-    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.Id}} </td>
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'sno-width'"> No. </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'sno-width'"> {{element.Id}} </td>
   </ng-container>
 
   <ng-container matColumnDef="Name">
@@ -23,27 +23,49 @@
     <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.PhoneNumber}} </td>
   </ng-container>
 
+  <!-- <ng-container matColumnDef="AadharNo">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> AadharNo </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.AadharNo}} </td>
+  </ng-container> -->
+<!-- 
+  <ng-container matColumnDef="Address">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> Address </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.Address}} </td>
+  </ng-container> -->
+
+  <ng-container matColumnDef="EmailId">
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> EmailId </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.EmailId}} </td>
+  </ng-container>
+
   <ng-container matColumnDef="JoinedOn">
     <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> JoinedOn </th>
     <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.JoinedOn | date: 'mediumDate'}} </td>
   </ng-container>
 
-  <ng-container matColumnDef="ReleavedOn">
-    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> ReleavedOn </th>
-    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.ReleavedOn| date: 'mediumDate'}} </td>
-  </ng-container>
-
   <ng-container matColumnDef="IsExists">
-    <th mat-header-cell *matHeaderCellDef [ngClass]="'customWidthClass'"> IsExists </th>
-    <td mat-cell *matCellDef="let element" [ngClass]="'customWidthClass'"> {{element.IsExists}} </td>
+    <th mat-header-cell *matHeaderCellDef [ngClass]="'col-w-70'"> IsExists </th>
+    <td mat-cell *matCellDef="let element" [ngClass]="'col-w-70'">
+      <i *ngIf="element.IsExists" class="icon-active"><mat-icon>check</mat-icon></i> 
+      <i *ngIf="!element.IsExists" class="icon-active"><mat-icon>close</mat-icon></i> 
+    </td>
   </ng-container>
 
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> Actions </th>
     <td mat-cell *matCellDef="let element">
-      <button mat-raised-button class="action-pink" (click)="openEditDialog(element)">Edit</button> 
-      <button mat-raised-button class="action-pink" (click)="checkInEmployee(element)">Check In</button> 
-      <button mat-raised-button class="action-pink" (click)="checkOutEmployee(element)">Check Out</button> 
+      <button mat-mini-fab disabled aria-label="Edit Employee" class="action-pink" >
+        <mat-icon (click)="openEditDialog(element)">edit</mat-icon>
+      </button>
+      <button mat-mini-fab disabled aria-label="Check In" class="action-pink" >
+        <mat-icon (click)="checkInEmployee(element)">work</mat-icon>
+      </button>
+      <button mat-mini-fab disabled aria-label="Check Out" class="action-pink" >
+        <mat-icon (click)="checkOutEmployee(element)">work_off</mat-icon>
+      </button>
+      <!-- <button mat-raised-button class="action-pink" (click)="openEditDialog(element)"><mat-icon>edit</mat-icon></button>  -->
+      <!-- <button mat-raised-button class="action-pink" (click)="checkInEmployee(element)">Check In</button> 
+      <button mat-raised-button class="action-pink" (click)="checkOutEmployee(element)">Check Out</button>  -->
     </td>
   </ng-container> 
 
@@ -53,4 +75,4 @@
 
 <div *ngIf="dataSource.data.length === 0">
   No Records Found!
-  </div>
+</div>

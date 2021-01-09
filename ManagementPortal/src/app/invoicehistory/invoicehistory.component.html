@@ -1,0 +1,25 @@
+<table datatable [dtOptions]="dtOptions" class="row-border hover">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Bill Date</th>
+      <th>Type</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="invoices?.length != 0">
+    <tr *ngFor="let invoice of invoices">
+      <td>{{ invoice.Id }}</td>
+      <td>{{ invoice.Name }}</td>
+      <td>{{ invoice.BillDate }}</td>
+      <td>{{ invoice.Type }}</td>
+      <td>{{ invoice.Amount }}</td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="invoice?.length == 0">
+    <tr>
+      <td colspan="3" class="no-data-available">No data!</td>
+    </tr>
+  <tbody>
+</table>
