@@ -3,6 +3,7 @@ import { CustomerService } from './customer.service';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Customer } from '../Model/Customer';
 import { AddCustomerDialog } from './AddCustomerDialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export interface DialogData {
   phoneNumber: string;
@@ -16,17 +17,26 @@ export interface DialogData {
 })
 
 export class CustomerComponent implements OnInit {
-  totalColumns: string[] = ['Id', 'Name', 'PhoneNumber', 'RegisteredOn', 'actions'];
-  displayedColumns = ['Id', 'Name', 'PhoneNumber', 'RegisteredOn', 'actions'];
+  totalColumns: string[] = ['Id', 'Name', 'PhoneNumber', 'EmailId', 'RegisteredOn', 'actions'];
+  displayedColumns = ['Id', 'Name', 'PhoneNumber', 'EmailId', 'RegisteredOn', 'actions'];
   dataSource = new MatTableDataSource<Customer>();
   phoneNumber: string;
-  name: string;
+  name: string;  
+  registerForm: FormGroup;
+  submitted = false;
 
   constructor(private customerService: CustomerService,
-              public dialog: MatDialog) { }
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.getAllCustomers();
+
+    this.registerForm = this.formBuilder.group({
+      name: ['', Validators.required, Validators.minLength(3)],
+      phoneNumber: ['', Validators.required, Validators.minLength(6)],
+      email: ['', [Validators.required, Validators.email,Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
+  });
   }
 
   
@@ -51,11 +61,11 @@ export class CustomerComponent implements OnInit {
     });
   }
 
-  openEditDialog(employee: Customer): void{
-    employee.isEditMode = true;
+  openEditDialog(customer: Customer): void{
+    customer.isEditMode = true;
     const dialogRef = this.dialog.open(AddCustomerDialog, {
       width: '400px',
-      data: employee
+      data: customer
     });
 
     dialogRef.afterClosed().subscribe(result => {

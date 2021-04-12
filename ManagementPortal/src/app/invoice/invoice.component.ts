@@ -148,12 +148,13 @@ export class InvoiceComponent implements OnInit {
     this.invoiceModel.DiscountAmount = 0;
     this.invoiceModel.DiscountPercent = 0;
     this.invoiceModel.TaxPercentage = 0;
+    var that = this;
     this.invoiceService.addInvoice(this.invoiceModel).then(
       function (){
-        this.toastr.success("Invoice Added Successfully!!");
+        that.toastr.success("Invoice Added Successfully!!");
       },
       function (){
-        this.toastr.error("Error in adding invoice");
+        that.toastr.error("Error in adding invoice");
       }
     );
   }

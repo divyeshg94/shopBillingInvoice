@@ -7,5 +7,6 @@
     [Type] int NULL,
     [Price] NVARCHAR(50) NULL, 
     [IsAvailable] BIT NOT NULL DEFAULT 1, 
-    [IsProduced] BIT NOT NULL DEFAULT 1 
+    [IsProduced] BIT NOT NULL DEFAULT 1, 
+    [DateOfPurchase] DATE NULL 
 )

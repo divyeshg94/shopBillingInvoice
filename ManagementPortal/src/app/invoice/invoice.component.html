@@ -1,93 +1,99 @@
 <div class='container invoice'>
     <form #form="ngForm" class='col-sm-12 invoiceForm' name='invoiceForm' (ngSubmit)="submitInvoice()">
-      <div  class="row">
-        <label class="col-sm-4"> Phone Number </label>
-        <input type='text' [(ngModel)]="invoiceModel.Customer.PhoneNumber" name='phoneNumber' class="col-sm-6 form-control"/>
-        <span class='fa fa-search p-1' (click)="searchByPhoneNumber(invoiceModel.Customer.PhoneNumber)"></span>
-        <span class='fa fa-plus p-1' id="openCustomerModalButton"  data-toggle="modal" data-target="#customerModal"  data-backdrop="false" ></span>
-      </div>  
-      <div class="row">
-          <label class="col-sm-4"> Customer Name </label>
-          <input type='text' [(ngModel)]="invoiceModel.Customer.Name" name='name' class="col-sm-6 form-control"/>
+        <div class="row">
+            <label class="col-sm-4"> Phone Number </label>
+            <input type='text' [(ngModel)]="invoiceModel.Customer.PhoneNumber" name='phoneNumber' class="col-sm-6 form-control" />
+            <span class='fa fa-search p-1' (click)="searchByPhoneNumber(invoiceModel.Customer.PhoneNumber)"></span>
+            <span class='fa fa-plus p-1' id="openCustomerModalButton" data-toggle="modal" data-target="#customerModal" data-backdrop="false"></span>
         </div>
-      <div class="row">
-          <!-- <label class="col-sm-4"> Services </label>
+        <div class="row">
+            <label class="col-sm-4"> Customer Name </label>
+            <input type='text' [(ngModel)]="invoiceModel.Customer.Name" name='name' class="col-sm-6 form-control" />
+        </div>
+        <div class="row">
+            <!-- <label class="col-sm-4"> Services </label>
           
           <button class="col-sm-1 btn btn-primary" (click)="addService(service.id)" style="margin: 0 5px">Add</button> -->
-          <label class="col-sm-4"> Email Id </label>
-          <input type='email' [(ngModel)]="invoiceModel.Customer.EmailId" name='email' class="col-sm-6 form-control"/>
+            <label class="col-sm-4"> Email Id </label>
+            <input type='email' [(ngModel)]="invoiceModel.Customer.EmailId" name='email' class="col-sm-6 form-control" />
+        </div>
+        <div class="row">
+            <label class="col-sm-4"> Serviced By </label>
+            <select id="itemId" [(ngModel)]="invoiceModel.EmployeeId" name='servicedBy' class="col-sm-6 form-control">
+<option *ngFor="let emp of employees" [value]="emp.Id">{{emp.Name}}</option>
+</select>
         </div>
         <!-- <div  class="row">
           <label class="col-sm-4"> Serviced By </label>
           <input type='text' [(ngModel)]="employees.Id" name='servicedBy' class="col-sm-6"/>
         </div> -->
-        <div  class="row">
-          <button  class="col-sm-4 btn theme-pink" type="button" id="openModalButton" data-toggle="modal" data-target="#exampleModal" data-backdrop="false" >
+        <div class="row">
+            <button class="col-sm-4 btn theme-pink" type="button" id="openModalButton" data-toggle="modal" data-target="#exampleModal" data-backdrop="false">
             Add Invoice Item
           </button>
         </div>
         <div class='row noItems' style="color: black;" *ngIf="items.length == 0">
-          <span> No items added </span>
+            <span> No items added </span>
         </div>
         <table class="table table-striped" *ngIf="items.length > 0">
-          <thead>
-            <tr>
-              <th>Item No</th>
-              <th>Item</th>
-              <th>Cost per Unit</th>
-              <th>Quantity</th>
-              <th>Amount Disconted</th>
-              <th>Total Price</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of items;let i = index;">
-                <td>{{i+1}}</td>
-                <td>{{item.Name}}</td>
-                <td><span class='fa fa-inr'></span> {{item.UnitPrice}}</td>
-                <td>{{item.Quantity}}</td>
-                <td><span class='fa fa-inr'></span> {{((item.DiscountPercent/100)*(item.TotalPrice)).toFixed(2)}}</td>
-                <td><span class='fa fa-inr'></span> {{item.TotalPrice}}</td>
-                <td>
-                  <span class='fa fa-pencil p-1' (click)="editItem(item)"></span>
-                  <span class='fa fa-trash p-1' (click)="deleteItem(item)"></span>
-                </td>
-            </tr>
-          </tbody>
+            <thead>
+                <tr>
+                    <th>Item No</th>
+                    <th>Item</th>
+                    <th>Cost per Unit</th>
+                    <th>Quantity</th>
+                    <th>Amount Disconted</th>
+                    <th>Total Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of items;let i = index;">
+                    <td>{{i+1}}</td>
+                    <td>{{item.Name}}</td>
+                    <td><span class='fa fa-inr'></span> {{item.UnitPrice}}</td>
+                    <td>{{item.Quantity}}</td>
+                    <td><span class='fa fa-inr'></span> {{((item.DiscountPercent/100)*(item.TotalPrice)).toFixed(2)}}</td>
+                    <td><span class='fa fa-inr'></span> {{item.TotalPrice}}</td>
+                    <td>
+                        <span class='fa fa-pencil p-1' (click)="editItem(item)"></span>
+                        <span class='fa fa-trash p-1' (click)="deleteItem(item)"></span>
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <br/>
         <div *ngIf="items.length != 0">
-          <label class="col-sm-2 pull-right fa fa-inr"> {{invoiceModel.TotalAmount}}</label>  
-          <label class="col-sm-2 pull-right">Total Price -</label>
+            <label class="col-sm-2 pull-right fa fa-inr"> {{invoiceModel.TotalAmount}}</label>
+            <label class="col-sm-2 pull-right">Total Price -</label>
         </div>
         <div class="row col-lg-12 pull-right" *ngIf="invoiceModel.ModeOfPayment == 0">
-          <label class="col-sm-2 pull-right">Cash</label>
-          <input type="text col-sm-2" name="cashProvided" [(ngModel)]="invoiceModel.CashProvided"/>
+            <label class="col-sm-2 pull-right">Cash</label>
+            <input type="text col-sm-2" name="cashProvided" [(ngModel)]="invoiceModel.CashProvided" />
         </div>
         <div class="row col-lg-12 pull-right" *ngIf="invoiceModel.ModeOfPayment == 0">
-          <label class="col-sm-2 pull-right">Change</label>
-          <label type="text col-sm-2">{{invoiceModel.CashProvided - invoiceModel.TotalAmount}}</label>
+            <label class="col-sm-2 pull-right">Change</label>
+            <label type="text col-sm-2">{{invoiceModel.CashProvided - invoiceModel.TotalAmount}}</label>
         </div>
 
         <div class="col-lg-12 row pull-right">
-          <div class="col-lg-6"></div>
-          <div class="radio-inline col-lg-2 pull-right">
-            <label class="form-check-label">
+            <div class="col-lg-6"></div>
+            <div class="radio-inline col-lg-2 pull-right">
+                <label class="form-check-label">
               <input type="radio" class="form-check-input" name="modeOfPayment" value="0" [(ngModel)]="invoiceModel.ModeOfPayment">Cash
             </label>
-          </div>
-          <div class="radio-inline col-lg-2 pull-right">
-            <label class="form-check-label">
+            </div>
+            <div class="radio-inline col-lg-2 pull-right">
+                <label class="form-check-label">
               <input type="radio" class="form-check-input" name="modeOfPayment" value="10" [(ngModel)]="invoiceModel.ModeOfPayment">Card
             </label>
-          </div>
-          <div class="radio-inline col-lg-2 pull-right">
-            <label class="form-check-label">
+            </div>
+            <div class="radio-inline col-lg-2 pull-right">
+                <label class="form-check-label">
               <input type="radio" class="form-check-input" name="modeOfPayment" value="20" [(ngModel)]="invoiceModel.ModeOfPayment">UPI
             </label>
-          </div>
+            </div>
         </div>
         <button type="button" class="btn btn-secondary m-2" (click)='clearInvoice()'>Discard</button>
         <button type="button" class="btn btn-success m-2" (click)='generateInvoice()'>Generate Invoice</button>
@@ -95,79 +101,79 @@
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Invoice Item</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Invoice Item</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-        <form #form="ngForm" class='col-sm-12 addItemForm' name='addItemForm' >
-          <div class="row">
-            <label class="col-sm-4"> Item name </label>
-            <select id="itemId" [(ngModel)]="item.Id" name='itemName' class="col-sm-8 form-control" (change)="getAttrValue('Price',item.Id)">
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm" class='col-sm-12 addItemForm' name='addItemForm'>
+                    <div class="row">
+                        <label class="col-sm-4"> Item name </label>
+                        <select id="itemId" [(ngModel)]="item.Id" name='itemName' class="col-sm-8 form-control" (change)="getAttrValue('Price',item.Id)">
               <option *ngFor="let it of servicesList" [value]="it.Id">{{it.Name}} - {{it.Category}}</option>
             </select>
-          </div>
-          <div  class="row">
-            <label class="col-sm-4"> Quantity </label>
-            <input type='number' [(ngModel)]="item.Quantity" name='quantity' class="col-sm-8 form-control"/>
-          </div>
-          <div class="row">
-            <label class="col-sm-4"> Cost per Unit </label>
-            <input type='number' [(ngModel)]="item.UnitPrice" name='Price' disabled class="col-sm-8 form-control"/>
-          </div>
-          <div class="row">
-            <label class="col-sm-4"> Serviced By </label>
-            <select id="itemId" [(ngModel)]="item.ServicedBy" name='servicedBy' class="col-sm-8 form-control">
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4"> Quantity </label>
+                        <input type='number' [(ngModel)]="item.Quantity" name='quantity' class="col-sm-8 form-control" />
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4"> Cost per Unit </label>
+                        <input type='number' [(ngModel)]="item.UnitPrice" name='Price' disabled class="col-sm-8 form-control" />
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4"> Serviced By </label>
+                        <select id="itemId" [(ngModel)]="item.ServicedBy" name='servicedBy' class="col-sm-8 form-control">
               <option *ngFor="let emp of employees" [value]="emp.Id">{{emp.Name}}</option>
             </select>
-          </div>
-          <div  class="row">
-            <label class="col-sm-4"> Discount % </label>
-            <input type='number' [(ngModel)]="item.DiscountPercent" name='discountPercent' class="col-sm-8 form-control"/>
-        </div> 
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModel(item)">Close</button>
-        <button *ngIf='!isEditMode' type="button" class="btn theme-pink" (click)="addItemToInvoice()">Add Item to Invoice</button>
-      </div>
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4"> Discount % </label>
+                        <input type='number' [(ngModel)]="item.DiscountPercent" name='discountPercent' class="col-sm-8 form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModel(item)">Close</button>
+                <button *ngIf='!isEditMode' type="button" class="btn theme-pink" (click)="addItemToInvoice()">Add Item to Invoice</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="customerModal" tabindex="-1" role="dialog" aria-labelledby="customerModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="customerModalLabel">Add Customer</h5>
-        <button type="button" id="customerCloseBtn" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="customerModalLabel">Add Customer</h5>
+                <button type="button" id="customerCloseBtn" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-      </div>
-      <div class="modal-body">
-        <form #form="ngForm" class='col-sm-12 addCustomerForm' name='addCustomerForm' >
-          <div class="row">
-            <label class="col-sm-4"> Name </label>
-            <input type='text' [(ngModel)]="invoiceModel.Customer.Name" name='name' class="col-sm-8 form-control"/>
-          </div>
-          <div  class="row">
-            <label class="col-sm-4"> Phone Number </label>
-            <input type='text' [(ngModel)]="invoiceModel.Customer.PhoneNumber" name='phoneNumber' class="col-sm-8 form-control"/>
-          </div>
-          <div class="row">
-            <label class="col-sm-4"> Email Id </label>
-            <input type='email' [(ngModel)]="invoiceModel.Customer.EmailId" name='emailId' class="col-sm-8 form-control"/>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModel(item)">Close</button>
-        <button *ngIf='!isEditMode' type="button" class="btn theme-pink" (click)="addNewCustomer()">Add Customer</button>
-      </div>
+            </div>
+            <div class="modal-body">
+                <form #form="ngForm" class='col-sm-12 addCustomerForm' name='addCustomerForm'>
+                    <div class="row">
+                        <label class="col-sm-4"> Name </label>
+                        <input type='text' [(ngModel)]="invoiceModel.Customer.Name" name='name' class="col-sm-8 form-control" />
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4"> Phone Number </label>
+                        <input type='text' [(ngModel)]="invoiceModel.Customer.PhoneNumber" name='phoneNumber' class="col-sm-8 form-control" />
+                    </div>
+                    <div class="row">
+                        <label class="col-sm-4"> Email Id </label>
+                        <input type='email' [(ngModel)]="invoiceModel.Customer.EmailId" name='emailId' class="col-sm-8 form-control" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModel(item)">Close</button>
+                <button *ngIf='!isEditMode' type="button" class="btn theme-pink" (click)="addNewCustomer()">Add Customer</button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
